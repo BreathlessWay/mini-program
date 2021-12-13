@@ -1,0 +1,21 @@
+<form bindsubmit="onSubmit">
+  <input type="text" name="title" />
+  <van-button bindtap="onLocation">位置</van-button>
+  <van-button form-type="submit">提交</van-button>
+</form>
+
+<van-cell-group>
+  <block wx:for="{{list}}" wx:key="_id">
+    <van-cell bindtap="onClick" data-id="{{item._id}}" title="{{item.title}}" value="内容" />
+  </block>
+</van-cell-group>
+
+<view wx:if="{{item}}">
+  <view>
+    <text>代办详情</text>
+  </view>
+  <text>{{item.title}}</text>
+  <text>{{item.address}}</text>
+  <text>{{item.name}}</text>
+  <button bindtap="go">在哪</button>
+</view>
