@@ -1,0 +1,7 @@
+.flex{
+  display: flex;
+}
+
+.van-tag{
+  margin-right: 10px;
+}
