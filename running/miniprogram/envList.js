@@ -1,6 +1,10 @@
-const envList = [{"envId":"personal-22c51c","alias":"personal"},{"envId":"test-6gpxb22ie5cf19d7","alias":"test"}]
-const isMac = true
+const envList = {
+  personal: "personal-22c51c",
+  running: "running-0g66zunfb34db76a",
+};
+
+const isMac = true;
 module.exports = {
-    envList,
-    isMac
-}
+  envList,
+  isMac,
+};

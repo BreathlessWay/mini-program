@@ -1,6 +1,0 @@
-<!--pages/cart/index.wxml-->
-<van-button bindtap="handleOrder">
-  下单
-</van-button>
-
-<official-account></official-account>
