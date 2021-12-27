@@ -10,7 +10,8 @@ exports.main = async (event, context) => {
     const result = await cloud.openapi.cloudbase.getOpenData({
       openid: wxContext.OPENID,
       cloudidList: [event.cloudID],
-    });
+    })
+    console.log(result)
     return JSON.parse(result.dataList[0].json).data.stepInfoList;
   } catch (err) {
     console.error(err)

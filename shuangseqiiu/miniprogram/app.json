@@ -43,5 +43,13 @@
     "van-button": "@vant/weapp/button/index",
     "van-cell": "@vant/weapp/cell/index",
     "van-cell-group": "@vant/weapp/cell-group/index"
+  },
+  "permission": {
+    "scope.userLocationBackground": {
+      "desc": "你的位置信息将用于运动信息的统计"
+    },
+    "scope.werun": {
+      "desc": "获取微信步数以统计运动信息"
+    }
   }
 }
