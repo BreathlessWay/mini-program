@@ -4,7 +4,9 @@ exports.mapKey = "EA7BZ-MHA3W-ZDHRC-OBOBL-YCZOZ-EBBB5";
 
 exports.mapSig = "It3SVqNj0IFJD5sYhtoZvrvlqEj1Hae";
 
-exports.weatherKey = 'SdLPBoOIJqwrFDyxk'
+exports.weatherPublicKey = 'Pf9Ko8KKhQlqfhTpD'
+
+exports.weatherPrivateKey = 'SdLPBoOIJqwrFDyxk'
 
 exports.otherStatus = 600;
 
