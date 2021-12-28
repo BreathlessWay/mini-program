@@ -2,7 +2,7 @@ const cloud = require("wx-server-sdk"),
   lget = require("lodash").get,
   getWeather = require("./getWeather"),
   locationToAddress = require("./locationToAddress"),
-  { locationMapDbName, env } = require("@/constants");
+  { locationMapDbName, env, otherStatus } = require("@/constants");
 
 cloud.init({
   env,
@@ -43,15 +43,23 @@ module.exports = async (event) => {
             city,
           },
         });
+      } else {
+        throw res;
       }
     }
-    result.errMsg = "";
-    result.data = await getWeather(cloud, city);
-    result.status = 0;
+
+    const weathResult = await getWeather(cloud, city);
+    if (weathResult.data) {
+      result.errMsg = "";
+      result.data = a;
+      result.status = 0;
+    } else {
+      throw weathResult;
+    }
   } catch (err) {
-    result.errMsg = err.message;
+    result.errMsg = err.message || err.errMsg || "获取天气数据失败";
     result.data = null;
-    result.status = 600;
+    result.status = err.errCode || err.status || otherStatus;
   }
 
   return result;
