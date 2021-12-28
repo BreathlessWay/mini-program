@@ -16,7 +16,7 @@ module.exports = async function (cloud, city) {
   if (weatherList && weatherList.data.length) {
     const date = dayjs().format("YYYY-MM-DD");
     weatherData = lget(weatherList, "data.0") || {};
-    if (weatherData.date !== date) {
+    if (weatherData.date === date) {
       return weatherData;
     }
   }
