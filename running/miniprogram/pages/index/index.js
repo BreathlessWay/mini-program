@@ -5,7 +5,7 @@ Page({
       type: 'gcj02'
     });
 
-    await wx.cloud.callFunction({
+    const weathData = await wx.cloud.callFunction({
       name: "running",
       data: {
         type: 'getWeatherData',
@@ -13,5 +13,7 @@ Page({
         longitude: res.longitude,
       },
     });
+
+    console.log(weathData)
   },
 });

@@ -2,7 +2,12 @@ const cloud = require("wx-server-sdk"),
   lget = require("lodash").get,
   getWeather = require("./getWeather"),
   locationToAddress = require("./locationToAddress"),
-  { locationMapDbName, env, otherStatus } = require("@/constants");
+  {
+    locationMapDbName,
+    env,
+    otherStatus,
+    successStatus,
+  } = require("@/constants");
 
 cloud.init({
   env,
@@ -12,11 +17,6 @@ const db = cloud.database(),
   locationMapDb = db.collection(locationMapDbName);
 
 module.exports = async (event) => {
-  const result = {
-    errMsg: "",
-    status: 0,
-    data: null,
-  };
   try {
     let city = "";
 
@@ -35,32 +35,27 @@ module.exports = async (event) => {
         latitude,
         longitude,
       });
-      if (res.data) {
-        city = lget(res, "data.ad_info.city") || "";
-        await locationMapDb.add({
-          data: {
-            location: new db.Geo.Point(longitude, latitude),
-            city,
-          },
-        });
-      } else {
-        throw res;
-      }
+      city = lget(res, "data.ad_info.city");
+      await locationMapDb.add({
+        data: {
+          location: new db.Geo.Point(longitude, latitude),
+          city,
+        },
+      });
     }
 
     const weathResult = await getWeather(cloud, city);
-    if (weathResult.data) {
-      result.errMsg = "";
-      result.data = a;
-      result.status = 0;
-    } else {
-      throw weathResult;
-    }
-  } catch (err) {
-    result.errMsg = err.message || err.errMsg || "获取天气数据失败";
-    result.data = null;
-    result.status = err.errCode || err.status || otherStatus;
-  }
 
-  return result;
+    return {
+      errMsg: "",
+      status: successStatus,
+      data: weathResult.data,
+    };
+  } catch (err) {
+    throw {
+      errMsg: err.errMsg || err.message || "获取天气数据失败",
+      status: err.errCode || err.status || otherStatus,
+      data: null,
+    };
+  }
 };

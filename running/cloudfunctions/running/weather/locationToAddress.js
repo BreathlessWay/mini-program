@@ -1,16 +1,11 @@
 // 云函数入口文件
 const superagent = require("superagent"),
   crypto = require("crypto"),
+  lget = require("lodash").get,
   { mapKey, mapSig, otherStatus } = require("../constants");
 
 // 云函数入口函数
 module.exports = async (cloud, { latitude, longitude }) => {
-  const result = {
-    errMsg: "",
-    status: 0,
-    data: null,
-  };
-
   try {
     // 每次都要重新创建 md5
     const sign = crypto
@@ -24,14 +19,25 @@ module.exports = async (cloud, { latitude, longitude }) => {
       `https://apis.map.qq.com/ws/geocoder/v1?key=${mapKey}&location=${latitude},${longitude}&sig=${sign}`
     );
 
-    const status = res.body.status;
-    result.errMsg = status ? res.body.message : "";
-    result.status = status;
-    result.data = res.body.result;
-  } catch (err) {
-    result.errMsg = err.message || "根据经纬度获取地址失败";
-    result.status = otherStatus;
-  }
+    // 状态码，0为正常，其它为异常，
+    if (
+      res.body.status === successStatus &&
+      res.body.result &&
+      lget(res, "body.ad_info.city")
+    ) {
+      return {
+        errMsg: "",
+        status: res.body.status,
+        data: res.body.result,
+      };
+    }
 
-  return result;
+    throw res.body;
+  } catch (err) {
+    throw {
+      errMsg: err.message || "根据经纬度获取地址失败",
+      status: err.status || otherStatus,
+      data: null,
+    };
+  }
 };

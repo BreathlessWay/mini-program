@@ -1,13 +1,18 @@
 const superagent = require("superagent"),
   lget = require("lodash").get,
   dayjs = require("dayjs"),
-  { weatherMapDbName, weatherPrivateKey, otherStatus } = require("@/constants");
+  {
+    weatherMapDbName,
+    weatherPrivateKey,
+    otherStatus,
+    successStatus,
+  } = require("@/constants");
 
 module.exports = async function (cloud, city) {
   try {
     let weatherData = null;
     if (!city) {
-      return {
+      throw {
         data: weatherData,
         status: otherStatus,
         errMsg: "参数 city 缺失",
@@ -23,10 +28,10 @@ module.exports = async function (cloud, city) {
     if (weatherList && weatherList.data.length) {
       const date = dayjs().format("YYYY-MM-DD");
       weatherData = lget(weatherList, "data.0") || {};
-      if (weatherData.date === date) {
+      if (weatherData.date !== date) {
         return {
           data: weatherData,
-          status: 0,
+          status: successStatus,
           errMsg: "",
         };
       }
@@ -34,7 +39,7 @@ module.exports = async function (cloud, city) {
 
     const res = await Promise.all([
         superagent.get(
-          `https://api.seniverse.com/v3/weather/daily.json?key=${weatherPrivateKey}&location=${encodeURIComponent(
+          `https://api.seniverse.com/v3/weather/dailwy.json?key=${weatherPrivateKey}&location=${encodeURIComponent(
             city
           )}&start=${dayjs().format("YYYY/MM/DD")}`
         ),
@@ -46,6 +51,13 @@ module.exports = async function (cloud, city) {
       ]),
       weather = lget(res, "0.body.results.0.daily.0"),
       life = lget(res, "1.body.results.0.suggestion");
+
+    if (!weather || !life) {
+      throw {
+        status: otherStatus,
+        errMsg: "获取天气和生活指数失败",
+      };
+    }
 
     if (weatherData && weatherData._id) {
       await weatherMapDb.doc(weatherData._id).update({
@@ -60,7 +72,7 @@ module.exports = async function (cloud, city) {
           ...weather,
           ...life,
         },
-        status: 0,
+        status: successStatus,
         errMsg: "",
       };
     }
@@ -79,15 +91,18 @@ module.exports = async function (cloud, city) {
         ...weather,
         ...life,
       },
-      status: 0,
+      status: successStatus,
       errMsg: "",
     };
   } catch (err) {
-    return {
+    throw {
       data: null,
       status: err.errCode || err.status || otherStatus,
       errMsg:
-        lget(err, "response.body.status") || err.message || "获取天气失败",
+        lget(err, "response.body.status") ||
+        err.errMsg ||
+        err.message ||
+        "获取天气失败",
     };
   }
 };
