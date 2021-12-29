@@ -2,10 +2,20 @@ const lget = require("lodash").get,
   { otherStatus } = require("@/constants");
 
 const tryCatchWrap = (fun, errMsg) => {
-  return async (...args) => {
+  return async (cloud, ...args) => {
+    const log = cloud.logger();
+    log.info({
+      name: `${fun.name} 调用`,
+      params: args,
+    });
     try {
-      return await fun.apply(this, args);
+      return await fun.apply(this, [cloud, ...args]);
     } catch (error) {
+      log.error({
+        name: `${fun.name} 调用失败`,
+        params: args,
+        error,
+      });
       throw {
         data: null,
         status: error.errCode || error.status || otherStatus,

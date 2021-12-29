@@ -1,18 +1,14 @@
-const cloud = require("wx-server-sdk"),
-  lget = require("lodash").get,
+const lget = require("lodash").get,
   getWeather = require("./getWeather"),
   locationToAddress = require("./locationToAddress"),
   tryCatchWrap = require("@/utils/tryCatchWrap"),
-  { locationMapDbName, env, successStatus } = require("@/constants");
+  { locationMapDbName, successStatus } = require("@/constants");
 
-cloud.init({
-  env,
-});
+const weatherApi = async (cloud, event) => {
 
-const db = cloud.database(),
-  locationMapDb = db.collection(locationMapDbName);
+  const db = cloud.database(),
+    locationMapDb = db.collection(locationMapDbName);
 
-const weatherApi = async (event) => {
   let city = "";
 
   const { latitude, longitude } = event;
