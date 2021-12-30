@@ -3,6 +3,7 @@ require("module-alias/register");
 
 const cloud = require("wx-server-sdk"),
   getWeatherData = require("@/weather/index"),
+  getSoulSoupData = require("@/soulSoup/index"),
   { env } = require("@/constants");
 
 cloud.init({
@@ -15,5 +16,7 @@ exports.main = async (event, context) => {
   switch (type) {
     case "getWeatherData":
       return await getWeatherData(cloud, rest, context);
+    case "getSoulSoupData":
+      return await getSoulSoupData(cloud, rest, context);
   }
 };

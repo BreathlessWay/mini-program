@@ -1,4 +1,3 @@
-const { get } = require("lodash");
 const superagent = require("superagent"),
   lget = require("lodash").get,
   dayjs = require("dayjs"),
@@ -6,7 +5,6 @@ const superagent = require("superagent"),
   {
     weatherMapDbName,
     weatherPrivateKey,
-    otherStatus,
     successStatus,
   } = require("@/constants");
 
@@ -15,7 +13,6 @@ const getWeather = async (cloud, city) => {
   if (!city) {
     throw {
       data: weatherData,
-      status: otherStatus,
       errMsg: "参数 city 缺失",
     };
   }

@@ -15,3 +15,7 @@ exports.otherStatus = 600;
 exports.locationMapDbName = "location_map";
 
 exports.weatherMapDbName = "weather_map";
+
+exports.soulSoupDbName = "soul_soup";
+
+exports.userMapDbName = "user_map";

@@ -4,10 +4,6 @@ const lget = require("lodash").get,
 const tryCatchWrap = (fun, errMsg) => {
   return async (cloud, ...args) => {
     const log = cloud.logger();
-    log.info({
-      name: `${fun.name} 调用`,
-      params: args,
-    });
     try {
       return await fun.apply(this, [cloud, ...args]);
     } catch (error) {
