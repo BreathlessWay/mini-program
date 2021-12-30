@@ -19,3 +19,5 @@ exports.weatherMapDbName = "weather_map";
 exports.soulSoupDbName = "soul_soup";
 
 exports.userMapDbName = "user_map";
+
+exports.holidayMapDbName = "holiday_map";
