@@ -28,24 +28,14 @@ const getSoulSoup = async (cloud) => {
 
   const soulSoupData = await getSoulSoupFromApi(cloud);
 
-  expire
-    ? await userMapCollection.doc(lget(userInfo, "data.0._id")).update({
-        data: {
-          soup: {
-            ...soulSoupData.data,
-            expire: dayjs().endOf("day").toDate(),
-          },
-        },
-      })
-    : await userMapCollection.add({
-        data: {
-          user_id: OPENID,
-          soup: {
-            ...soulSoupData.data,
-            expire: dayjs().endOf("day").toDate(),
-          },
-        },
-      });
+  await userMapCollection.doc(lget(userInfo, "data.0._id")).update({
+    data: {
+      soup: {
+        ...soulSoupData.data,
+        expire: dayjs().endOf("day").toDate(),
+      },
+    },
+  });
 
   return {
     errMsg: "",
