@@ -1,4 +1,5 @@
 const lget = require("lodash").get,
+  isNumber = require("lodash").isNumber,
   dayjs = require("dayjs"),
   tryCatchWrap = require("@/utils/tryCatchWrap"),
   { userMapDbName, successStatus } = require("@/constants");
@@ -29,55 +30,72 @@ const getPlanApi = async (cloud, event) => {
 
   const date = event.date,
     userInfo = lget(userResult, "data.0") || {},
-    stepInfo = userInfo.stepInfo;
+    stepInfo = userInfo.stepInfo || {};
 
-  let plan = userInfo.plan || [];
-  if (date) {
+  const plan = userInfo.plan || [];
+
+  let currentDayPlan = null,
+    stepCount = 0;
+
+  if (date && plan.length) {
     const formatDate = dayjs(date).format("YYYY-MM-DD");
-    plan = plan.find((item) => item.date === formatDate);
-    const matchStepInfo = stepInfoList.find(
-      (item) => dayjs(item.timestamp * 1000).format("YYYY-MM-DD") === formatDate
-    );
+    currentDayPlan = plan.find((item) => item.date === formatDate);
 
-    const now = dayjs(date).valueOf(),
-      startTime = dayjs(`${plan.date} ${plan.startTime}`).valueOf(),
-      endTime = dayjs(`${plan.date} ${plan.endTime}`).valueOf(),
-      gap = 10 * 60 * 1000;
+    if (currentDayPlan) {
+      const matchStepInfo = stepInfoList.find(
+        (item) =>
+          dayjs(item.timestamp * 1000).format("YYYY-MM-DD") === formatDate
+      );
 
-    console.log(now, startTime, endTime, matchStepInfo);
+      const now = dayjs(date).valueOf(),
+        startTime = dayjs(
+          `${currentDayPlan.date} ${currentDayPlan.startTime}`
+        ).valueOf(),
+        endTime = dayjs(
+          `${currentDayPlan.date} ${currentDayPlan.endTime}`
+        ).valueOf(),
+        gap = 10 * 60 * 1000;
 
-    if (now < startTime + gap && now > startTime - gap) {
-      if (
-        !(stepInfo && stepInfo.startTimestamp) ||
-        Math.abs(now - startTime) <
-          Math.abs(stepInfo.startTimestamp - startTime)
-      ) {
-        userMapDb.doc(userInfo._id).update({
-          data: {
-            stepInfo: {
-              startStep: matchStepInfo.step,
-              startTimestamp: now,
+      if (now < startTime + gap && now > startTime - gap) {
+        if (
+          !stepInfo.startTimestamp ||
+          Math.abs(now - startTime) <
+            Math.abs(stepInfo.startTimestamp - startTime)
+        ) {
+          userMapDb.doc(userInfo._id).update({
+            data: {
+              stepInfo: {
+                startStep: matchStepInfo.step,
+                startTimestamp: now,
+              },
             },
-          },
-        });
+          });
+        }
+      }
+      if (isNumber(stepInfo.startStep) && isNumber(stepInfo.endStep)) {
+        stepCount = stepInfo.endStep - stepInfo.startStep;
+      }
+      if (
+        stepInfo.startTimestamp &&
+        now < endTime + gap &&
+        now > endTime - gap
+      ) {
+        if (
+          !stepInfo.endTimestamp ||
+          Math.abs(now - endTime) < Math.abs(stepInfo.endTimestamp - endTime)
+        ) {
+          stepCount = matchStepInfo.step - stepInfo.startStep;
+          userMapDb.doc(userInfo._id).update({
+            data: {
+              stepInfo: {
+                endStep: matchStepInfo.step,
+                endTimestamp: now,
+              },
+            },
+          });
+        }
       }
     }
-
-    if (now < endTime + gap && now > endTime - gap) {
-      if (stepInfo && stepInfo.endTimestamp) {
-      }
-    }
-    // 开始前后10分钟
-    // {
-    //   startStep: 100,
-    //   startTimestamp: dayjs(date).valueOf
-    // }
-    console.log(dayjs(date).valueOf());
-    // 结束前后10分钟
-    // {
-    //   endStep: 100,
-    //   endTimestamp: dayjs(date).valueOf
-    // }
   }
 
   return {
@@ -86,7 +104,8 @@ const getPlanApi = async (cloud, event) => {
     data: {
       target: userInfo.target,
       plan,
-      stepInfo: 0,
+      stepCount,
+      currentDayPlan,
     },
   };
 };
