@@ -1,26 +1,38 @@
 const tryCatchWrap = require("@/utils/tryCatchWrap"),
-  { userMapDbName, successStatus } = require("@/constants");
+  { planMapDbName, successStatus } = require("@/constants");
 
 const createPlanApi = async (cloud, event) => {
   const { OPENID } = cloud.getWXContext(),
     db = cloud.database(),
-    userMapDb = db.collection(userMapDbName);
+    planMapDb = db.collection(planMapDbName),
+    findData = await planMapDb
+      .where({
+        user_id: OPENID,
+        month: event.month,
+      })
+      .get();
 
-  await userMapDb
-    .where({
+  if (findData.data.length) {
+    throw `${event.month}的运动计划已存在，请勿重复创建`;
+  }
+
+  await planMapDb.add({
+    data: {
       user_id: OPENID,
-    })
-    .update({
-      data: {
-        plan: event.plan,
-        target: event.target,
-      },
-    });
+      month: event.month, // 2022-01
+      plan: event.plan, // [{ day: 2022-01-01, startTime: 7:00, endTime: 8:00 }]
+      target: event.target,
+    },
+  });
 
   return {
     errMsg: "",
     status: successStatus,
-    data: event.plan,
+    data: {
+      month: event.month,
+      plan: event.plan,
+      target: event.target,
+    },
   };
 };
 

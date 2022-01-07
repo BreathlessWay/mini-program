@@ -8,7 +8,8 @@ Page({
       data: {
         type: "getPlanData",
         cloudID: res.cloudID,
-        date: new Date()
+        date: new Date(),
+        month: '2022-01'
       },
     });
 

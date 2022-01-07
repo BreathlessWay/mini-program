@@ -3,16 +3,17 @@ const lget = require("lodash").get,
   dayjs = require("dayjs"),
   tryCatchWrap = require("@/utils/tryCatchWrap"),
   getJokerApi = require("./joker"),
-  { userMapDbName, successStatus } = require("@/constants");
+  { planMapDbName, successStatus } = require("@/constants");
 
 const getPlanApi = async (cloud, event) => {
   const { OPENID } = cloud.getWXContext(),
     db = cloud.database(),
-    userMapDb = db.collection(userMapDbName);
+    planMapDb = db.collection(planMapDbName);
 
-  const userResult = await userMapDb
+  const planResult = await planMapDb
     .where({
       user_id: OPENID,
+      month: event.month,
     })
     .get();
 
@@ -27,22 +28,24 @@ const getPlanApi = async (cloud, event) => {
         JSON.parse(lget(runResult, "dataList.0.json")),
         "data.stepInfoList"
       ) || [];
-  } catch (error) {}
+  } catch (error) {
+    throw "获取微信运动步数失败";
+  }
 
   const date = event.date,
-    userInfo = lget(userResult, "data.0") || {},
-    stepInfo = userInfo.stepInfo || {};
-
-  const plan = userInfo.plan || [];
+    planInfo = lget(planResult, "data.0") || {},
+    plan = planInfo.plan || [],
+    stepInfo = planInfo.stepInfo || {};
 
   let currentDayPlan = null,
     stepCount = 0;
 
   if (date && plan.length) {
-    const formatDate = dayjs(date).format("YYYY-MM-DD");
-    currentDayPlan = plan.find((item) => item.date === formatDate) || null;
+    const formatDate = dayjs(date).format("YYYY-MM-DD"),
+      currentIndex = plan.findIndex((item) => item.day === formatDate);
 
-    if (currentDayPlan) {
+    if (~currentIndex) {
+      currentDayPlan = plan[currentIndex] || null;
       const matchStepInfo = stepInfoList.find(
         (item) =>
           dayjs(item.timestamp * 1000).format("YYYY-MM-DD") === formatDate
@@ -50,10 +53,10 @@ const getPlanApi = async (cloud, event) => {
 
       const now = dayjs(date).valueOf(),
         startTime = dayjs(
-          `${currentDayPlan.date} ${currentDayPlan.startTime}`
+          `${currentDayPlan.day} ${currentDayPlan.startTime}`
         ).valueOf(),
         endTime = dayjs(
-          `${currentDayPlan.date} ${currentDayPlan.endTime}`
+          `${currentDayPlan.day} ${currentDayPlan.endTime}`
         ).valueOf(),
         gap = 10 * 60 * 1000;
 
@@ -63,9 +66,9 @@ const getPlanApi = async (cloud, event) => {
           Math.abs(now - startTime) <
             Math.abs(stepInfo.startTimestamp - startTime)
         ) {
-          userMapDb.doc(userInfo._id).update({
+          planMapDb.doc(planInfo._id).update({
             data: {
-              stepInfo: {
+              [`plan.${currentIndex}.stepInfo`]: {
                 startStep: matchStepInfo.step,
                 startTimestamp: now,
               },
@@ -86,9 +89,9 @@ const getPlanApi = async (cloud, event) => {
           Math.abs(now - endTime) < Math.abs(stepInfo.endTimestamp - endTime)
         ) {
           stepCount = matchStepInfo.step - stepInfo.startStep;
-          userMapDb.doc(userInfo._id).update({
+          planMapDb.doc(planInfo._id).update({
             data: {
-              stepInfo: {
+              [`plan.${currentIndex}.stepInfo`]: {
                 endStep: matchStepInfo.step,
                 endTimestamp: now,
               },
@@ -109,7 +112,7 @@ const getPlanApi = async (cloud, event) => {
     errMsg: "",
     status: successStatus,
     data: {
-      target: userInfo.target,
+      target: planInfo.target,
       plan,
       stepCount,
       currentDayPlan,
