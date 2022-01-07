@@ -6,10 +6,8 @@ Page({
     const soulSoupData = await wx.cloud.callFunction({
       name: "running",
       data: {
-        type: "getPlanData",
-        cloudID: res.cloudID,
+        type: "getShareData",
         date: new Date(),
-        month: '2022-01'
       },
     });
 

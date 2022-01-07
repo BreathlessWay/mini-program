@@ -26,3 +26,6 @@ exports.holidayMapDbName = "holiday_map";
 
 exports.jokerMapDbName = "joker_map";
 
+exports.commonMapDbName = "common_map";
+
+

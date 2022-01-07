@@ -1,7 +1,8 @@
 {
   "permissions": {
     "openapi": [
-      "cloudbase.getOpenData"
+      "cloudbase.getOpenData",
+      "wxacode.get"
     ]
   }
 }

@@ -5,6 +5,7 @@ const lget = require("lodash").get,
   getJokerApi = require("./joker"),
   { planMapDbName, successStatus } = require("@/constants");
 
+  // 传入 date 参数表示开始运动
 const getPlanApi = async (cloud, event) => {
   const { OPENID } = cloud.getWXContext(),
     db = cloud.database(),
