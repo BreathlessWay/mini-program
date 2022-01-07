@@ -1,9 +1,9 @@
 const lget = require("lodash").get,
-  superagent = require("superagent"),
   tryCatchWrap = require("@/utils/tryCatchWrap"),
   { commonMapDbName, successStatus } = require("@/constants");
 
 const shareApi = async (cloud, event) => {
+  // weather soup stepCount target bg
   const db = cloud.database(),
     commonMapDb = db.collection(commonMapDbName),
     pic = await commonMapDb
