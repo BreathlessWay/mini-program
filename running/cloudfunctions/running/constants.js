@@ -21,3 +21,6 @@ exports.soulSoupDbName = "soul_soup";
 exports.userMapDbName = "user_map";
 
 exports.holidayMapDbName = "holiday_map";
+
+exports.jokerMapDbName = "joker_map";
+

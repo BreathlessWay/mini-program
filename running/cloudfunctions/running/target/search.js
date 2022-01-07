@@ -2,6 +2,7 @@ const lget = require("lodash").get,
   isNumber = require("lodash").isNumber,
   dayjs = require("dayjs"),
   tryCatchWrap = require("@/utils/tryCatchWrap"),
+  getJokerApi = require("./joker"),
   { userMapDbName, successStatus } = require("@/constants");
 
 const getPlanApi = async (cloud, event) => {
@@ -39,7 +40,7 @@ const getPlanApi = async (cloud, event) => {
 
   if (date && plan.length) {
     const formatDate = dayjs(date).format("YYYY-MM-DD");
-    currentDayPlan = plan.find((item) => item.date === formatDate);
+    currentDayPlan = plan.find((item) => item.date === formatDate) || null;
 
     if (currentDayPlan) {
       const matchStepInfo = stepInfoList.find(
@@ -98,6 +99,12 @@ const getPlanApi = async (cloud, event) => {
     }
   }
 
+  let joker = "";
+
+  if (!currentDayPlan) {
+    joker = (await getJokerApi(cloud)).data;
+  }
+
   return {
     errMsg: "",
     status: successStatus,
@@ -106,6 +113,7 @@ const getPlanApi = async (cloud, event) => {
       plan,
       stepCount,
       currentDayPlan,
+      joker,
     },
   };
 };

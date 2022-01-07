@@ -6,14 +6,6 @@ const createPlanApi = async (cloud, event) => {
     db = cloud.database(),
     userMapDb = db.collection(userMapDbName);
 
-  // [
-  //   {
-  //     date: "",
-  //     startTime: "",
-  //     endTime: ""
-  //   },
-  // ];
-
   await userMapDb
     .where({
       user_id: OPENID,
