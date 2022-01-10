@@ -16,7 +16,7 @@ const getSoulSoupFromApi = async (cloud) => {
 
     content = res.body.msg;
     if (!content) {
-      throw new Error("接口不存在");
+      throw "接口不存在";
     }
   } catch (error) {
     log.error({

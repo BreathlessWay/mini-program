@@ -20,4 +20,4 @@ const getJokerApi = async (cloud) => {
   };
 };
 
-module.exports = tryCatchWrap(getJokerApi);
+module.exports = tryCatchWrap(getJokerApi, '获取笑话失败');

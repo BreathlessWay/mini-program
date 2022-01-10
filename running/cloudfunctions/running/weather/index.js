@@ -43,4 +43,4 @@ const weatherApi = async (cloud, event) => {
   };
 };
 
-module.exports = tryCatchWrap(weatherApi);
+module.exports = tryCatchWrap(weatherApi, '获取天气信息失败');

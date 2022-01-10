@@ -10,6 +10,7 @@ const cloud = require("wx-server-sdk"),
   createPlanData = require("@/target/create"),
   getPlanData = require("@/target/search"),
   getShareData = require("@/share/index"),
+  getNewsData = require("@/news/index"),
   { env } = require("@/constants");
 
 cloud.init({
@@ -32,5 +33,7 @@ exports.main = async (event, context) => {
       return await getPlanData(cloud, rest, context);
     case "getShareData":
       return await getShareData(cloud, rest, context);
+    case "getNewsData":
+      return await getNewsData(cloud, rest, context);
   }
 };

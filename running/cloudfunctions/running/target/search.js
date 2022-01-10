@@ -122,4 +122,4 @@ const getPlanApi = async (cloud, event) => {
   };
 };
 
-module.exports = tryCatchWrap(getPlanApi);
+module.exports = tryCatchWrap(getPlanApi, '获取运动计划失败');

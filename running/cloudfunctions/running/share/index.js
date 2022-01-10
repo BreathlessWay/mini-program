@@ -45,4 +45,4 @@ const shareApi = async (cloud, event) => {
   };
 };
 
-module.exports = tryCatchWrap(shareApi);
+module.exports = tryCatchWrap(shareApi, '获取分享图片失败');

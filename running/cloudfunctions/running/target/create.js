@@ -36,4 +36,4 @@ const createPlanApi = async (cloud, event) => {
   };
 };
 
-module.exports = tryCatchWrap(createPlanApi);
+module.exports = tryCatchWrap(createPlanApi, '创建运动计划失败');
