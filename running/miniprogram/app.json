@@ -1,10 +1,28 @@
 {
-  "pages": ["pages/index/index"],
+  "pages": ["pages/index/index", "pages/me/index"],
+  "tabBar": {
+    "color": "#bfbfbf",
+    "selectedColor": "#1296db",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "跑啊",
+        "iconPath": "./images/icon1.png",
+        "selectedIconPath": "./images/icon1-1.png"
+      },
+      {
+        "pagePath": "pages/me/index",
+        "text": "我跑",
+        "iconPath": "./images/icon2.png",
+        "selectedIconPath": "./images/icon2-1.png"
+      }
+    ]
+  },
   "window": {
-    "backgroundColor": "#F6F6F6",
+    "backgroundColor": "#fff",
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#F6F6F6",
-    "navigationBarTitleText": "跑步",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "跑R",
     "navigationBarTextStyle": "black"
   },
   "permission": {
