@@ -13,7 +13,7 @@ const getHistory = async (cloud, event) => {
   let result = [];
 
   if (historyLength <= size) {
-    result = historyLength;
+    result = historyList;
   } else {
     const index = Math.floor(Math.random() * (historyLength - size));
     result = historyList.splice(index, size);
