@@ -4,6 +4,7 @@ process.env.TZ = "Asia/Shanghai";
 require("module-alias/register");
 
 const cloud = require("wx-server-sdk"),
+  login = require("@/login/index"),
   getWeatherData = require("@/weather/index"),
   getSoulSoupData = require("@/soulSoup/index"),
   getHolidayData = require("@/holiday/index"),
@@ -12,6 +13,7 @@ const cloud = require("wx-server-sdk"),
   getShareData = require("@/share/index"),
   getNewsData = require("@/news/index"),
   getHistoryData = require("@/history/index"),
+  getGushiData = require("@/gushi/index"),
   { env } = require("@/constants");
 
 cloud.init({
@@ -22,6 +24,8 @@ cloud.init({
 exports.main = async (event, context) => {
   const { type, ...rest } = event;
   switch (type) {
+    case "login":
+      return await login(cloud, rest, context);
     case "getWeatherData":
       return await getWeatherData(cloud, rest, context);
     case "getSoulSoupData":
@@ -38,5 +42,7 @@ exports.main = async (event, context) => {
       return await getNewsData(cloud, rest, context);
     case "getHistoryData":
       return await getHistoryData(cloud, rest, context);
+    case "getGushiData":
+      return await getGushiData(cloud, rest, context);
   }
 };

@@ -4,11 +4,21 @@ Page({
     const soulSoupData = await wx.cloud.callFunction({
       name: "running",
       data: {
-        type: "getHistoryData",
-        size: 10
+        type: "getGushiData",
       },
     });
 
     console.log(soulSoupData);
   },
+  async getUserInfo(e){
+    const soulSoupData = await wx.cloud.callFunction({
+      name: "running",
+      data: {
+        type: "login",
+        userInfo: e.detail.userInfo
+      },
+    });
+
+    console.log(soulSoupData);
+  }
 });

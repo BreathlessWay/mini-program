@@ -1,13 +1,14 @@
 const lget = require("lodash").get,
   dayjs = require("dayjs"),
+  superagent = require("superagent"),
   tryCatchWrap = require("@/utils/tryCatchWrap"),
-  getSoulSoupFromApi = require("@/soulSoup/getSoulSoupFromApi"),
-  { successStatus, userMapDbName } = require("@/constants");
+  { userMapDbName, successStatus } = require("@/constants");
 
-const getSoulSoup = async (cloud) => {
+const getGushiData = async (cloud, event) => {
   const { OPENID } = cloud.getWXContext(),
-    userMapCollection = cloud.database().collection(userMapDbName),
-    userResult = await userMapCollection
+    db = cloud.database(),
+    userMapDb = db.collection(userMapDbName),
+    userResult = await userMapDb
       .where({
         user_id: OPENID,
       })
@@ -18,7 +19,7 @@ const getSoulSoup = async (cloud) => {
     throw "请先登录！";
   }
 
-  const { expire, ...rest } = userInfo.soup || {},
+  const { expire, ...rest } = userInfo.gushi || {},
     now = dayjs().toDate();
 
   if (expire && expire >= now) {
@@ -29,12 +30,12 @@ const getSoulSoup = async (cloud) => {
     };
   }
 
-  const soulSoupData = await getSoulSoupFromApi(cloud);
+  const guShiData = await superagent.get("https://v1.jinrishici.com/all.json");
 
-  await userMapCollection.doc(userInfo._id).update({
+  await userMapDb.doc(userInfo._id).update({
     data: {
-      soup: {
-        ...soulSoupData.data,
+      gushi: {
+        ...guShiData.body,
         expire: dayjs().endOf("day").toDate(),
       },
     },
@@ -43,10 +44,8 @@ const getSoulSoup = async (cloud) => {
   return {
     errMsg: "",
     status: successStatus,
-    data: {
-      ...soulSoupData.data,
-    },
+    data: guShiData.body,
   };
 };
 
-module.exports = tryCatchWrap(getSoulSoup, "获取语录失败");
+module.exports = tryCatchWrap(getGushiData, "获取古诗词失败");
