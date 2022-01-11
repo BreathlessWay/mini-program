@@ -28,4 +28,7 @@ exports.jokerMapDbName = "joker_map";
 
 exports.commonMapDbName = "common_map";
 
+exports.chengyuMapDbName = "chengyu_map";
+
+
 

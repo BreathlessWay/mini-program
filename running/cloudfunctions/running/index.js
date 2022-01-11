@@ -14,6 +14,7 @@ const cloud = require("wx-server-sdk"),
   getNewsData = require("@/news/index"),
   getHistoryData = require("@/history/index"),
   getGushiData = require("@/gushi/index"),
+  getChengyuData = require("@/chengyu/index"),
   { env } = require("@/constants");
 
 cloud.init({
@@ -44,5 +45,7 @@ exports.main = async (event, context) => {
       return await getHistoryData(cloud, rest, context);
     case "getGushiData":
       return await getGushiData(cloud, rest, context);
+    case "getChengyuData":
+      return await getChengyuData(cloud, rest, context);
   }
 };

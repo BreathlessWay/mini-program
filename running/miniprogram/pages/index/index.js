@@ -4,7 +4,7 @@ Page({
     const soulSoupData = await wx.cloud.callFunction({
       name: "running",
       data: {
-        type: "getGushiData",
+        type: "getChengyuData",
       },
     });
 

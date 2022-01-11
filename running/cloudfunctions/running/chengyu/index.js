@@ -1,14 +1,13 @@
 const lget = require("lodash").get,
   dayjs = require("dayjs"),
-  superagent = require("superagent"),
   tryCatchWrap = require("@/utils/tryCatchWrap"),
-  { userMapDbName, successStatus } = require("@/constants");
+  getChengyuFromApi = require("@/chengyu/getChengyuFromApi"),
+  { successStatus, userMapDbName } = require("@/constants");
 
-const getGushiData = async (cloud, event) => {
+const getChengyu = async (cloud) => {
   const { OPENID } = cloud.getWXContext(),
-    db = cloud.database(),
-    userMapDb = db.collection(userMapDbName),
-    userResult = await userMapDb
+    userMapCollection = cloud.database().collection(userMapDbName),
+    userResult = await userMapCollection
       .where({
         user_id: OPENID,
       })
@@ -19,7 +18,7 @@ const getGushiData = async (cloud, event) => {
     throw "请先登录！";
   }
 
-  const { expire, ...rest } = userInfo.gushi || {},
+  const { expire, ...rest } = userInfo.chengyu || {},
     now = dayjs().toDate();
 
   if (expire && expire >= now) {
@@ -30,12 +29,12 @@ const getGushiData = async (cloud, event) => {
     };
   }
 
-  const gushiData = await superagent.get("https://v1.jinrishici.com/all.json");
+  const chengyuData = await getChengyuFromApi(cloud);
 
-  await userMapDb.doc(userInfo._id).update({
+  await userMapCollection.doc(userInfo._id).update({
     data: {
-      gushi: {
-        ...guShiData.body,
+      chengyu: {
+        ...chengyuData.data,
         expire: dayjs().endOf("day").toDate(),
       },
     },
@@ -44,8 +43,8 @@ const getGushiData = async (cloud, event) => {
   return {
     errMsg: "",
     status: successStatus,
-    data: guShiData.body,
+    data: chengyuData.data,
   };
 };
 
-module.exports = tryCatchWrap(getGushiData, "获取古诗词失败");
+module.exports = tryCatchWrap(getChengyu, "获取成语失败");
