@@ -4,21 +4,24 @@ Page({
     const soulSoupData = await wx.cloud.callFunction({
       name: "running",
       data: {
-        type: "getChengyuData",
+        type: "getBmiData",
+        height: 170,
+        weight: 80,
+        gender: 1
       },
     });
 
     console.log(soulSoupData);
   },
-  async getUserInfo(e){
+  async getUserInfo(e) {
     const soulSoupData = await wx.cloud.callFunction({
       name: "running",
       data: {
         type: "login",
-        userInfo: e.detail.userInfo
+        userInfo: e.detail.userInfo,
       },
     });
 
     console.log(soulSoupData);
-  }
+  },
 });

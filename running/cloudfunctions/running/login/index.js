@@ -14,20 +14,10 @@ const login = async (cloud, event) => {
     userInfo = lget(userResult, "data.0"),
     data = {
       avatarUrl: "",
-      city: "",
-      country: "",
-      gender: 0,
-      language: "",
       nickName: "",
-      province: "",
-      _id: "",
+      gender: 0, // 0-未知 1-男 2-女
+      setting: [1, 1, 1, 1],
     };
-
-  // userInfo !event.userInfo
-
-  // userInfo  event.userInfo
-
-  // !userInfo  event.userInfo
 
   if (userInfo) {
     if (!event.userInfo) {
@@ -35,26 +25,27 @@ const login = async (cloud, event) => {
         data[p] = userInfo[p];
       }
     } else {
-      await userMapDb.doc(userInfo._id).update({
-        data: {
-          ...event.userInfo,
-        },
-      });
       for (let p in data) {
         data[p] = event.userInfo[p];
       }
+      await userMapDb.doc(userInfo._id).update({
+        data,
+      });
+
       data._id = userInfo._id;
     }
   } else {
+    for (let p in data) {
+      if (event.userInfo.hasOwnProperty(p)) {
+        data[p] = event.userInfo[p];
+      }
+    }
     const res = await userMapDb.add({
       data: {
         user_id: OPENID,
-        ...event.userInfo,
+        ...data,
       },
     });
-    for (let p in data) {
-      data[p] = event.userInfo[p];
-    }
     data._id = res._id;
   }
 
