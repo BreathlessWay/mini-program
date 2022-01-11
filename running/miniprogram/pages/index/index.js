@@ -4,7 +4,8 @@ Page({
     const soulSoupData = await wx.cloud.callFunction({
       name: "running",
       data: {
-        type: "getNewsData"
+        type: "getHistoryData",
+        size: 10
       },
     });
 
