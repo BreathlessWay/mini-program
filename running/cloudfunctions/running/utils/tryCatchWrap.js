@@ -7,7 +7,6 @@ const tryCatchWrap = (fun, errMsg) => {
     try {
       return await fun.apply(this, [cloud, ...args]);
     } catch (error) {
-      console.log(error);
       log.error({
         name: `${fun.name} 调用失败`,
         params: args,
@@ -21,6 +20,8 @@ const tryCatchWrap = (fun, errMsg) => {
           (lget(error, "response.body.status") ||
             error.errMsg ||
             error.message ||
+            error ||
+            errMsg ||
             ""),
       };
     }

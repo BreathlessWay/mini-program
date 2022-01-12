@@ -19,6 +19,10 @@ const login = async (cloud, event) => {
       setting: [1, 1, 1, 1],
     };
 
+  if (!userInfo && !event.userInfo) {
+    throw "暂无用户信息";
+  }
+
   if (userInfo) {
     if (!event.userInfo) {
       for (let p in data) {

@@ -24,31 +24,35 @@ cloud.init({
 
 // 云函数入口函数
 exports.main = async (event, context) => {
-  const { type, ...rest } = event;
-  switch (type) {
-    case "login":
-      return await login(cloud, rest, context);
-    case "getWeatherData":
-      return await getWeatherData(cloud, rest, context);
-    case "getSoulSoupData":
-      return await getSoulSoupData(cloud, rest, context);
-    case "getHolidayData":
-      return await getHolidayData(cloud, rest, context);
-    case "createPlanData":
-      return await createPlanData(cloud, rest, context);
-    case "getPlanData":
-      return await getPlanData(cloud, rest, context);
-    case "getShareData":
-      return await getShareData(cloud, rest, context);
-    case "getNewsData":
-      return await getNewsData(cloud, rest, context);
-    case "getHistoryData":
-      return await getHistoryData(cloud, rest, context);
-    case "getGushiData":
-      return await getGushiData(cloud, rest, context);
-    case "getChengyuData":
-      return await getChengyuData(cloud, rest, context);
-    case "getBmiData":
-      return await getBmiData(cloud, rest, context);
+  try {
+    const { type, ...rest } = event;
+    switch (type) {
+      case "login":
+        return await login(cloud, rest, context);
+      case "getWeatherData":
+        return await getWeatherData(cloud, rest, context);
+      case "getSoulSoupData":
+        return await getSoulSoupData(cloud, rest, context);
+      case "getHolidayData":
+        return await getHolidayData(cloud, rest, context);
+      case "createPlanData":
+        return await createPlanData(cloud, rest, context);
+      case "getPlanData":
+        return await getPlanData(cloud, rest, context);
+      case "getShareData":
+        return await getShareData(cloud, rest, context);
+      case "getNewsData":
+        return await getNewsData(cloud, rest, context);
+      case "getHistoryData":
+        return await getHistoryData(cloud, rest, context);
+      case "getGushiData":
+        return await getGushiData(cloud, rest, context);
+      case "getChengyuData":
+        return await getChengyuData(cloud, rest, context);
+      case "getBmiData":
+        return await getBmiData(cloud, rest, context);
+    }
+  } catch (error) {
+    throw error.errMsg || error.message;
   }
 };
