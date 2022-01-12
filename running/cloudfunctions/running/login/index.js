@@ -5,6 +5,7 @@ const lget = require("lodash").get,
 const login = async (cloud, event) => {
   const { OPENID } = cloud.getWXContext(),
     db = cloud.database(),
+    _ = db.command,
     userMapDb = db.collection(userMapDbName),
     userResult = await userMapDb
       .where({
@@ -19,18 +20,18 @@ const login = async (cloud, event) => {
       setting: [1, 1, 1, 1],
     };
 
-  if (!userInfo && !event.userInfo) {
+  if (!userInfo && !event.user) {
     throw "暂无用户信息";
   }
-
+  // event.userInfo 尽然在服务器上有值 fuck
   if (userInfo) {
-    if (!event.userInfo) {
+    if (!event.user) {
       for (let p in data) {
         data[p] = userInfo[p];
       }
     } else {
       for (let p in data) {
-        data[p] = event.userInfo[p];
+        data[p] = event.user[p];
       }
       await userMapDb.doc(userInfo._id).update({
         data,
@@ -40,8 +41,8 @@ const login = async (cloud, event) => {
     }
   } else {
     for (let p in data) {
-      if (event.userInfo.hasOwnProperty(p)) {
-        data[p] = event.userInfo[p];
+      if (event.user.hasOwnProperty(p)) {
+        data[p] = event.user[p];
       }
     }
     const res = await userMapDb.add({

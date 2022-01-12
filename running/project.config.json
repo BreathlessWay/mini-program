@@ -10,7 +10,7 @@
     "minified": true,
     "newFeature": true,
     "coverView": true,
-    "nodeModules": false,
+    "nodeModules": true,
     "autoAudits": false,
     "showShadowRootInWxmlPanel": true,
     "scopeDataCheck": false,
@@ -24,7 +24,9 @@
     "useApiHook": true,
     "useApiHostProcess": true,
     "babelSetting": {
-      "ignore": [],
+      "ignore": [
+        "miniprogram_npm/*"
+      ],
       "disablePlugins": [],
       "outputPath": ""
     },
@@ -38,6 +40,22 @@
     "minifyWXML": true,
     "showES6CompileOption": false,
     "useCompilerPlugins": false
+  },
+  "packOptions": {
+    "ignore": [
+      {
+        "type": "file",
+        "value": "package.json"
+      },
+      {
+        "type": "file",
+        "value": "package-lock.json"
+      },
+      {
+        "type": "folder",
+        "value": "node_modulse"
+      }
+    ]
   },
   "appid": "wxffdaaeab2ebcd268",
   "projectname": "running",
@@ -57,8 +75,7 @@
       "list": []
     },
     "miniprogram": {
-      "list": [
-      ]
+      "list": []
     }
   }
 }
