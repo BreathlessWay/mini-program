@@ -35,7 +35,7 @@ const getGushiData = async (cloud, event) => {
   await userMapDb.doc(userInfo._id).update({
     data: {
       gushi: {
-        ...guShiData.body,
+        ...gushiData.body,
         expire: dayjs().endOf("day").toDate(),
       },
     },
@@ -44,7 +44,7 @@ const getGushiData = async (cloud, event) => {
   return {
     errMsg: "",
     status: successStatus,
-    data: guShiData.body,
+    data: gushiData.body,
   };
 };
 
