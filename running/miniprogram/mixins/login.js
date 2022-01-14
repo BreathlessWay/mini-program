@@ -1,4 +1,5 @@
 const lget = require("lodash.get");
+const app = getApp();
 
 module.exports = Behavior({
   data: {
@@ -6,6 +7,15 @@ module.exports = Behavior({
   },
   async created() {
     await this.login();
+  },
+  pageLifetimes: {
+    show() {
+      if (!this.data.userInfo && app.globalData.userInfo) {
+        this.setData({
+          userInfo: app.globalData.userInfo,
+        });
+      }
+    },
   },
   methods: {
     async login() {
@@ -20,7 +30,7 @@ module.exports = Behavior({
         this.setData({
           userInfo: userDetail,
         });
-        getApp().globalData.userInfo = userDetail;
+        app.globalData.userInfo = userDetail;
       } catch (error) {
         console.log(error);
       }

@@ -20,9 +20,9 @@
   },
   "window": {
     "backgroundColor": "#fff",
-    "backgroundTextStyle": "light",
+    "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "跑R",
+    "navigationBarTitleText": "跑 R",
     "navigationBarTextStyle": "black"
   },
   "permission": {
