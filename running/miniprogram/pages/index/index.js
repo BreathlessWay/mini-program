@@ -1,3 +1,5 @@
+const app = getApp();
+
 const dayjs = require("dayjs");
 const lget = require("lodash.get");
 
@@ -36,6 +38,11 @@ Page({
     }
   },
   async onShow() {
+    if (app.globalData.userInfo) {
+      this.setData({
+        userInfo: app.globalData.userInfo,
+      });
+    }
     try {
       wx.showNavigationBarLoading();
       await this.getOnShowData();

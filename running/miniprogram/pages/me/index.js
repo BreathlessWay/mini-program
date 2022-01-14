@@ -1,18 +1,27 @@
+const app = getApp();
+
 const { userStore, SET_USER } = require("../../store/user");
 
 Page({
   data: {
     userInfo: null,
   },
-  onLoad: function (options) {
+  onLoad() {
     userStore.on(SET_USER, this.setUserInfo);
   },
-  onShow: function () {},
+  onShow() {
+    if (app.globalData.userInfo) {
+      this.setData({
+        userInfo: app.globalData.userInfo,
+      });
+    }
+  },
   onUnload() {
     userStore.off(SET_USER, this.setUserInfo);
   },
-  onPullDownRefresh: function () {},
+  onPullDownRefresh() {},
   setUserInfo(userInfo) {
+    console.log("fuck");
     this.setData({
       userInfo,
     });
