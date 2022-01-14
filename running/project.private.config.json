@@ -12,6 +12,12 @@
     },
     "miniprogram": {
       "list": [
+        {
+          "name": "",
+          "pathName": "pages/me/index",
+          "query": "",
+          "scene": null
+        }
       ]
     }
   }

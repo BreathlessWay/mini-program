@@ -1,5 +1,3 @@
-const app = getApp();
-
 const loginMixin = require("../../mixins/login");
 
 const dayjs = require("dayjs");
@@ -76,18 +74,18 @@ Page({
   },
   getOnLoadData() {
     return Promise.all([
-      // this.getWeather(),
-      // this.getHoliday(),
-      // this.getSoulSoup(),
-      // this.getGushiData(),
-      // this.getChengyuData(),
+      this.getWeather(),
+      this.getHoliday(),
+      this.getSoulSoup(),
+      this.getGushiData(),
+      this.getChengyuData(),
     ]);
   },
   getOnShowData() {
     return Promise.all([
-      // this.getPlanData(),
-      // this.getNewsData(),
-      // this.getHistoryData(),
+      this.getPlanData(),
+      this.getNewsData(),
+      this.getHistoryData(),
     ]);
   },
   async getWeather() {
@@ -114,7 +112,9 @@ Page({
   },
   async getUserInfo(e) {
     try {
-      wx.showLoading();
+      wx.showLoading({
+        title: "登录中...",
+      });
       await wx.cloud.callFunction({
         name: "running",
         data: {
@@ -131,6 +131,7 @@ Page({
           setting: [1, 1, 1, 1],
         },
       });
+      await this.getOnShowData();
     } catch (error) {
       wx.showToast({
         title: "获取用户信息失败",
@@ -142,7 +143,9 @@ Page({
   },
   async getUserProfile(e) {
     try {
-      wx.showLoading();
+      wx.showLoading({
+        title: "登录中...",
+      });
       // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认
       // 开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
       const res = await wx.getUserProfile({
@@ -163,6 +166,7 @@ Page({
           setting: [1, 1, 1, 1],
         },
       });
+      await this.getOnShowData();
     } catch (error) {
       wx.showToast({
         title: "获取用户信息失败",
