@@ -5,7 +5,7 @@ const lget = require("lodash").get,
   getJokerApi = require("./joker"),
   { planMapDbName, successStatus } = require("@/constants");
 
-  // 传入 date 参数表示开始运动
+// 传入 date 参数表示开始运动
 const getPlanApi = async (cloud, event) => {
   const { OPENID } = cloud.getWXContext(),
     db = cloud.database(),
@@ -18,22 +18,8 @@ const getPlanApi = async (cloud, event) => {
     })
     .get();
 
-  const runResult = await cloud.openapi.cloudbase.getOpenData({
-    openid: OPENID,
-    cloudidList: [event.cloudID],
-  });
-  let stepInfoList = [];
-  try {
-    stepInfoList =
-      lget(
-        JSON.parse(lget(runResult, "dataList.0.json")),
-        "data.stepInfoList"
-      ) || [];
-  } catch (error) {
-    throw "获取微信运动步数失败";
-  }
-
   const date = event.date,
+    cloudID = event.cloudID,
     planInfo = lget(planResult, "data.0") || {},
     plan = planInfo.plan || [],
     stepInfo = planInfo.stepInfo || {};
@@ -41,7 +27,22 @@ const getPlanApi = async (cloud, event) => {
   let currentDayPlan = null,
     stepCount = 0;
 
-  if (date && plan.length) {
+  if (cloudID && date && plan.length) {
+    const runResult = await cloud.openapi.cloudbase.getOpenData({
+      openid: OPENID,
+      cloudidList: [cloudID],
+    });
+    let stepInfoList = [];
+    try {
+      stepInfoList =
+        lget(
+          JSON.parse(lget(runResult, "dataList.0.json")),
+          "data.stepInfoList"
+        ) || [];
+    } catch (error) {
+      throw "获取微信运动步数失败";
+    }
+
     const formatDate = dayjs(date).format("YYYY-MM-DD"),
       currentIndex = plan.findIndex((item) => item.day === formatDate);
 
@@ -122,4 +123,4 @@ const getPlanApi = async (cloud, event) => {
   };
 };
 
-module.exports = tryCatchWrap(getPlanApi, '获取运动计划失败');
+module.exports = tryCatchWrap(getPlanApi, "获取运动计划失败");
