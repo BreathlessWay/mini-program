@@ -1,11 +1,12 @@
-const loginMixin = require("../../mixins/login");
-
 const dayjs = require("dayjs");
 const lget = require("lodash.get");
+
+const { userStore, SET_USER } = require("../../store/user");
 
 Page({
   data: {
     canIUseGetUserProfile: false,
+    userInfo: null,
     weatherData: null,
     holidayData: null,
     soulSoupData: null,
@@ -16,11 +17,12 @@ Page({
     historyData: [],
     errMsg: [],
   },
-  behaviors: [loginMixin],
   async onLoad() {
+    userStore.on(SET_USER, this.setUserInfo);
     try {
       wx.showLoading({
         title: "Running",
+        mask: true,
       });
       if (wx.getUserProfile) {
         this.setData({
@@ -71,6 +73,14 @@ Page({
       imageUrl: "../../images/photo-1488778578932-0f84d315fcae.jpeg",
       query: "",
     };
+  },
+  onUnload() {
+    userStore.off(SET_USER, this.setUserInfo);
+  },
+  setUserInfo(userInfo) {
+    this.setData({
+      userInfo,
+    });
   },
   getOnLoadData() {
     return Promise.all([
@@ -123,13 +133,11 @@ Page({
         },
       });
 
-      this.setData({
-        userInfo: {
-          avatarUrl: lget(e, "detail.userInfo.avatarUrl"),
-          gender: lget(e, "detail.userInfo.gender"),
-          nickName: lget(e, "detail.userInfo.nickName"),
-          setting: [1, 1, 1, 1],
-        },
+      this.saveUserInfo({
+        avatarUrl: lget(e, "detail.userInfo.avatarUrl"),
+        gender: lget(e, "detail.userInfo.gender"),
+        nickName: lget(e, "detail.userInfo.nickName"),
+        setting: [1, 1, 1, 1],
       });
       await this.getOnShowData();
     } catch (error) {
@@ -158,13 +166,12 @@ Page({
           user: res.userInfo,
         },
       });
-      this.setData({
-        userInfo: {
-          avatarUrl: lget(res, "userInfo.avatarUrl"),
-          gender: lget(res, "userInfo.gender"),
-          nickName: lget(res, "userInfo.nickName"),
-          setting: [1, 1, 1, 1],
-        },
+
+      this.saveUserInfo({
+        avatarUrl: lget(res, "userInfo.avatarUrl"),
+        gender: lget(res, "userInfo.gender"),
+        nickName: lget(res, "userInfo.nickName"),
+        setting: [1, 1, 1, 1],
       });
       await this.getOnShowData();
     } catch (error) {

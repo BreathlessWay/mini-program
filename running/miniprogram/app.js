@@ -1,4 +1,7 @@
 const { envList } = require("./envList");
+const { userStore, SET_USER } = require("./store/user");
+
+const lget = require("lodash.get");
 
 App({
   async onLaunch() {
@@ -13,6 +16,22 @@ App({
         env: envList.running,
         traceUser: true,
       });
+    }
+    await this.login();
+  },
+  async login() {
+    try {
+      const userInfo = await wx.cloud.callFunction({
+        name: "running",
+        data: {
+          type: "login",
+        },
+      });
+      const userDetail = lget(userInfo, "result.data");
+      userStore.trigger(SET_USER, userDetail);
+      this.globalData.userInfo = userDetail;
+    } catch (error) {
+      console.log(error);
     }
   },
   onError(error) {

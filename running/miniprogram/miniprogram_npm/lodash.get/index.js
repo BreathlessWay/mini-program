@@ -940,5 +940,3 @@ module.exports = get;
 }, function(modId) {var map = {}; return __REQUIRE__(map[modId], modId); })
 return __REQUIRE__(1641953189398);
 })()
-//miniprogram-npm-outsideDeps=[]
-//# sourceMappingURL=index.js.map

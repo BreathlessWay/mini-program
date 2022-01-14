@@ -9,5 +9,3 @@ __DEFINE__(1641953189397, function(require, module, exports) {
 }, function(modId) {var map = {}; return __REQUIRE__(map[modId], modId); })
 return __REQUIRE__(1641953189397);
 })()
-//miniprogram-npm-outsideDeps=[]
-//# sourceMappingURL=index.js.map
