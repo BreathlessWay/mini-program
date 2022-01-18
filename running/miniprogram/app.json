@@ -1,5 +1,13 @@
 {
-  "pages": ["pages/index/index", "pages/me/index"],
+  "pages": [
+    "pages/index/index",
+    "pages/me/index",
+    "pages/plan/index",
+    "pages/setting/index",
+    "pages/bmi/index",
+    "pages/chart/index",
+    "pages/about/index"
+  ],
   "tabBar": {
     "color": "#bfbfbf",
     "selectedColor": "#1296db",

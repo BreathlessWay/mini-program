@@ -17,6 +17,18 @@
           "pathName": "pages/me/index",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/setting/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/bmi/index",
+          "query": "",
+          "scene": null
         }
       ]
     }

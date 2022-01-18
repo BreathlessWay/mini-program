@@ -21,7 +21,11 @@ const login = async (cloud, event) => {
     };
 
   if (!userInfo && !event.user) {
-    throw "暂无用户信息";
+    return {
+      errMsg: "",
+      status: successStatus,
+      data: null
+    };
   }
   // event.userInfo 尽然在服务器上有值 fuck
   if (userInfo) {

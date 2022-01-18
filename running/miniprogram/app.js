@@ -28,9 +28,14 @@ App({
         },
       });
       const userDetail = lget(userInfo, "result.data");
-      userStore.trigger(SET_USER, userDetail);
+      if (userDetail) {
+        userStore.trigger(SET_USER, userDetail);
+      }
     } catch (error) {
-      console.log(error);
+      wx.showToast({
+        title: "登录失败",
+        icon: "error",
+      });
     }
   },
   onError(error) {

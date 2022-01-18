@@ -1,0 +1,4 @@
+<!--pages/about/index.wxml-->
+<view>
+  <text>使用手册</text>
+</view>
