@@ -22,8 +22,8 @@ Page({
   onUnload() {
     userStore.off(SET_USER, this.setUserInfo);
   },
-  onPullDownRefresh() {},
-  setUserInfo(userInfo) {
+  async setUserInfo(userInfo) {
+    app.globalData.userInfo = userInfo;
     this.setData({
       userInfo,
     });

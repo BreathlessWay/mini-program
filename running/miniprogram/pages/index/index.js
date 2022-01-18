@@ -42,13 +42,13 @@ Page({
       this.setData({
         userInfo: app.globalData.userInfo,
       });
-    }
-    try {
-      wx.showNavigationBarLoading();
-      await this.getOnShowData();
-    } catch (error) {
-    } finally {
-      wx.hideNavigationBarLoading();
+      try {
+        wx.showNavigationBarLoading();
+        await this.getOnShowData();
+      } catch (error) {
+      } finally {
+        wx.hideNavigationBarLoading();
+      }
     }
   },
   async onPullDownRefresh() {
@@ -84,10 +84,18 @@ Page({
   onUnload() {
     userStore.off(SET_USER, this.setUserInfo);
   },
-  setUserInfo(userInfo) {
+  async setUserInfo(userInfo) {
+    app.globalData.userInfo = userInfo;
     this.setData({
       userInfo,
     });
+    try {
+      wx.showNavigationBarLoading();
+      await this.getOnShowData();
+    } catch (error) {
+    } finally {
+      wx.hideNavigationBarLoading();
+    }
   },
   getOnLoadData() {
     return Promise.all([
@@ -140,13 +148,12 @@ Page({
         },
       });
 
-      this.saveUserInfo({
+      await this.setUserInfo({
         avatarUrl: lget(e, "detail.userInfo.avatarUrl"),
         gender: lget(e, "detail.userInfo.gender"),
         nickName: lget(e, "detail.userInfo.nickName"),
         setting: [1, 1, 1, 1],
       });
-      await this.getOnShowData();
     } catch (error) {
       wx.showToast({
         title: "获取用户信息失败",
@@ -174,13 +181,12 @@ Page({
         },
       });
 
-      this.saveUserInfo({
+      await this.setUserInfo({
         avatarUrl: lget(res, "userInfo.avatarUrl"),
         gender: lget(res, "userInfo.gender"),
         nickName: lget(res, "userInfo.nickName"),
         setting: [1, 1, 1, 1],
       });
-      await this.getOnShowData();
     } catch (error) {
       wx.showToast({
         title: "获取用户信息失败",

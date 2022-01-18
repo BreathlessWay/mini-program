@@ -29,7 +29,6 @@ App({
       });
       const userDetail = lget(userInfo, "result.data");
       userStore.trigger(SET_USER, userDetail);
-      this.globalData.userInfo = userDetail;
     } catch (error) {
       console.log(error);
     }
