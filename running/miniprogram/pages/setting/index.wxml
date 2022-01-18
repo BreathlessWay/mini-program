@@ -1,2 +1,38 @@
 <!--pages/setting/index.wxml-->
-<text>pages/setting/index.wxml</text>
+<block wx:if="{{ userInfo }}">
+  <view>
+    <text>同步微信用户信息</text>
+    <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile"> getUserProfile </button>
+    <button wx:else open-type="getUserInfo" bindgetuserinfo="getUserInfo"> getUserInfo </button>
+  </view>
+  <view class="page-section">
+    <view class="weui-cells__title">用户信息</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+        <input class="weui-input" maxlength="10" bindinput="bindKeyInputUserName" placeholder="输入同步到view中" value="{{userInfo.nickName}}" />
+      </view>
+    </view>
+  </view>
+  <view class="section">
+    <view class="section__title">性别</view>
+    <picker bindchange="bindPickerChange" value="{{userInfo.gender}}" range="{{array}}">
+      <view class="picker">
+        当前选择：{{array[userInfo.gender]}}
+      </view>
+    </picker>
+  </view>
+  <view class="page-section">
+    <view class="page-section-title">推荐展示样式</view>
+    <view class="weui-cells weui-cells_after-title">
+      <checkbox-group bindchange="checkboxChange">
+        <label class="weui-cell weui-check__label" wx:for="{{items}}" wx:key="value">
+          <view class="weui-cell__hd">
+            <checkbox value="{{item.value}}" checked="{{item.checked}}" />
+          </view>
+          <view class="weui-cell__bd">{{item.name}}</view>
+        </label>
+      </checkbox-group>
+    </view>
+  </view>
+  <button type="primary" bindtap="handleSubmit">就这样决定了</button>
+</block>
