@@ -6,7 +6,7 @@
     <button wx:else open-type="getUserInfo" bindgetuserinfo="getUserInfo"> getUserInfo </button>
   </view>
   <view class="page-section">
-    <view class="weui-cells__title">用户信息</view>
+    <view class="weui-cells__title">用户昵称</view>
     <view class="weui-cells weui-cells_after-title">
       <view class="weui-cell weui-cell_input">
         <input class="weui-input" maxlength="10" bindinput="bindKeyInputUserName" placeholder="输入同步到view中" value="{{userInfo.nickName}}" />
@@ -22,7 +22,7 @@
     </picker>
   </view>
   <view class="page-section">
-    <view class="page-section-title">推荐展示样式</view>
+    <view class="page-section-title">首页看些啥</view>
     <view class="weui-cells weui-cells_after-title">
       <checkbox-group bindchange="checkboxChange">
         <label class="weui-cell weui-check__label" wx:for="{{items}}" wx:key="value">

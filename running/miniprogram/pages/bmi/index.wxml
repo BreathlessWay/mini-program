@@ -2,7 +2,7 @@
   <view class="weui-cells__title">身高(cm)</view>
   <view class="weui-cells weui-cells_after-title">
     <view class="weui-cell weui-cell_input">
-      <input class="weui-input" type="number" placeholder="请输入身高" bindinput="bindKeyInputHeight" />
+      <input class="weui-input" type="digit" placeholder="请输入身高" bindinput="bindKeyInputHeight" />
     </view>
   </view>
 </view>
@@ -10,7 +10,7 @@
   <view class="weui-cells__title">体重(kg)</view>
   <view class="weui-cells weui-cells_after-title">
     <view class="weui-cell weui-cell_input">
-      <input class="weui-input" type="number" placeholder="请输入体重" bindinput="bindKeyInputWeight" />
+      <input class="weui-input" type="digit" placeholder="请输入体重" bindinput="bindKeyInputWeight" />
     </view>
   </view>
 </view>

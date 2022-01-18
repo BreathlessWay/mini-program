@@ -1,66 +1,87 @@
-// pages/plan/index.js
+const dayjs = require("dayjs");
+const lget = require("lodash.get");
+
+const currentMonth = dayjs().format("YYYY-MM");
+
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    planList: [],
+    target: 0,
+    startTime: '',
+    endTime: '',
+    filterDate: currentMonth,
+    loading: false,
+    disabled: false,
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-
+  async onShow() {
+    await this.getPlanData(this.data.filterDate);
   },
+  async getPlanData(month) {
+    this.setData({
+      disabled: currentMonth === month,
+    });
+    wx.showLoading({
+      title: "获取运动计划",
+    });
+    try {
+      const plan = await wx.cloud.callFunction({
+        name: "running",
+        data: {
+          type: "getPlanData",
+          month,
+        },
+      });
+      const planData = lget(plan, "result.data.plan") || [],
+        target = lget(plan, "result.data.target") || 0;
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+      this.setData({
+        planList: planData,
+        target,
+      });
+    } catch (error) {
+      wx.showToast({
+        title: "运动计划走丢了...",
+        icon: "error",
+      });
+    } finally {
+      wx.hideLoading();
+    }
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
+  async handleChangeDate(date) {
+    this.setData({
+      filterDate: date,
+    });
+    await this.getPlanData(date);
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
+  handleInputTarget(e) {
+    this.setData({
+      target: Number(e.detail.value),
+    });
   },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
+  bindStartTimeChange(e) {
+    this.setData({
+      startTime: e.detail.value,
+    });
   },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
+  bindEndTimeChange(e) {
+    this.setData({
+      endTime: e.detail.value,
+    });
   },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
+  async handleSubmit() {
+    this.setData({
+      loading: true,
+    });
+    try {
+    } catch (error) {
+      wx.showToast({
+        title: "神秘力量在阻碍！",
+        icon: "error",
+      });
+    } finally {
+      this.setData({
+        loading: false,
+      });
+    }
   },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
-})
+});

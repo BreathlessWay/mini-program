@@ -35,6 +35,12 @@
           "pathName": "pages/chart/index",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/plan/index",
+          "query": "",
+          "scene": null
         }
       ]
     }
