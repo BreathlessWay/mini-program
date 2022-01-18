@@ -1,7 +1,5 @@
 const app = getApp();
 
-const dayjs = require("dayjs");
-
 const { userStore, SET_USER } = require("../../store/user");
 
 Page({
@@ -17,7 +15,6 @@ Page({
         userInfo: app.globalData.userInfo,
       });
     }
-    await this.getPlanData();
   },
   onUnload() {
     userStore.off(SET_USER, this.setUserInfo);
@@ -27,19 +24,5 @@ Page({
     this.setData({
       userInfo,
     });
-  },
-  async getPlanData() {
-    try {
-      const plan = await wx.cloud.callFunction({
-        name: "running",
-        data: {
-          type: "getPlanData",
-          month: dayjs().format("YYYY-MM"),
-        },
-      });
-      console.log(plan);
-    } catch (error) {
-      console.log(error);
-    }
   },
 });

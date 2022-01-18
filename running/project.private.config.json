@@ -29,6 +29,12 @@
           "pathName": "pages/bmi/index",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/chart/index",
+          "query": "",
+          "scene": null
         }
       ]
     }

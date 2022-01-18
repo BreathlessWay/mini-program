@@ -1,2 +1,9 @@
 <!--pages/chart/index.wxml-->
-<text>pages/chart/index.wxml</text>
+<view class="section">
+  <view class="section__title">日期选择器</view>
+  <picker mode="date" value="{{filterDate}}" fields="month" bindchange="bindDateChange">
+    <view class="picker">
+      当前选择: {{filterDate}}
+    </view>
+  </picker>
+</view>
