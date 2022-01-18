@@ -44,5 +44,13 @@ App({
   onUnhandledRejection(error) {
     console.log(error);
   },
-  globalData: {},
+  globalData: {
+    userInfo: {
+      avatarUrl:
+        "https://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLicu70LG0j0RFukvz8SCrzB6gGRAAYibbzCFEVtiaib17G05q5wWFTMMos6RARVmK38Qf5ry9uico4oOQ/132",
+      gender: 0,
+      nickName: "曜灵",
+      setting: [1, 1, 1, 1],
+    },
+  },
 });
