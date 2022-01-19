@@ -7,8 +7,8 @@ Page({
   data: {
     planList: [],
     target: 0,
-    startTime: '',
-    endTime: '',
+    startTime: "",
+    endTime: "",
     filterDate: currentMonth,
     loading: false,
     disabled: false,
@@ -69,13 +69,27 @@ Page({
     });
   },
   async handleSubmit() {
+    const data = {
+      month: this.data.filterDate,
+      target: this.data.target,
+      startTime: this.data.startTime,
+      endTime: this.data.endTime,
+      plan: planList,
+    };
     this.setData({
       loading: true,
     });
     try {
+      await wx.cloud.callFunction({
+        name: "running",
+        data: {
+          type: "createPlanData",
+          ...data,
+        },
+      });
     } catch (error) {
       wx.showToast({
-        title: "神秘力量在阻碍！",
+        title: "魔鬼在阻碍着你！",
         icon: "error",
       });
     } finally {
