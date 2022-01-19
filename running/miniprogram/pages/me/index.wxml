@@ -5,7 +5,7 @@
   <view class="btn-area">
     <navigator url="/pages/plan/index" hover-class="navigator-hover">定个计划吧</navigator>
     <navigator url="/pages/chart/index" hover-class="other-navigator-hover">看看运动了没</navigator>
-    <navigator url="/pages/chart/index" hover-class="other-navigator-hover">和别人比比</navigator>
+    <!-- <navigator url="/pages/chart/index" hover-class="other-navigator-hover">和别人比比</navigator> -->
     <navigator url="/pages/bmi/index" hover-class="other-navigator-hover">算算身材如何</navigator>
     <navigator url="/pages/setting/index" hover-class="other-navigator-hover">洗心革面一下</navigator>
     <navigator url="/pages/about/index" hover-class="other-navigator-hover">这玩意儿怎么用</navigator>
