@@ -10,13 +10,7 @@
       <view class="section__title">结束时间 {{endTime}}</view>
     </picker>
   </view>
-  <view class="page-section">
-    <view class="weui-cells__title">运动目标</view>
-    <view class="weui-cells weui-cells_after-title">
-      <view class="weui-cell weui-cell_input">
-        <input disabled="{{disabled}}" class="weui-input" value="{{target}}" type="number" bindinput="handleInputTarget" placeholder="运动步数" />
-      </view>
-    </view>
-  </view>
-  <button type="primary" bindtap="handleSubmit" loading="{{loading}}">就这样计划了</button>
+  <view class="weui-cells__title">运动目标</view>
+  <input disabled="{{disabled}}" class="weui-input" value="{{target}}" type="number" bindinput="handleInputTarget" placeholder="运动步数" />
+  <button type="primary" bindtap="handleSubmit" loading="{{loading}}">就这样决定了</button>
 </view>

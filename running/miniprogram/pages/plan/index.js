@@ -37,6 +37,8 @@ Page({
       this.setData({
         planList: planData,
         target,
+        startTime: lget(plan, "result.data.startTime", ""),
+        endTime: lget(plan, "result.data.endTime", ""),
       });
     } catch (error) {
       wx.showToast({
