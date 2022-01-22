@@ -76,7 +76,7 @@ Page({
       target: this.data.target,
       startTime: this.data.startTime,
       endTime: this.data.endTime,
-      plan: planList,
+      plan: this.data.planList,
     };
     this.setData({
       loading: true,
@@ -91,7 +91,7 @@ Page({
       });
     } catch (error) {
       wx.showToast({
-        title: "魔鬼在阻碍着你！",
+        title: "计划被拒绝了",
         icon: "error",
       });
     } finally {
