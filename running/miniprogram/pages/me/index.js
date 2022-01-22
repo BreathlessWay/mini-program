@@ -1,3 +1,4 @@
+import lget from "lodash.get";
 import { setUserInfo, removeUserInfo } from "../../utils/auth";
 
 const app = getApp();
@@ -6,6 +7,7 @@ Page({
   data: {
     canIUseGetUserProfile: false,
     userInfo: null,
+    register: false,
   },
   onLoad() {
     if (wx.getUserProfile) {
@@ -18,6 +20,29 @@ Page({
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
+      });
+    }
+  },
+  async login() {
+    try {
+      const userInfo = await wx.cloud.callFunction({
+        name: "running",
+        data: {
+          type: "login",
+        },
+      });
+      const userDetail = lget(userInfo, "result.data");
+      if (userDetail) {
+        this.setUserInfo(userDetail);
+      } else {
+        this.setData({
+          register: true,
+        });
+      }
+    } catch (error) {
+      wx.showToast({
+        title: "登录失败",
+        icon: "error",
       });
     }
   },
@@ -56,13 +81,14 @@ Page({
       wx.hideLoading();
     }
   },
-  async getUserProfile(e) {
+  async getUserProfile() {
     try {
       wx.showLoading({
         title: "登录中...",
       });
       // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认
       // 开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
+      // 只能在外层才能触发，只能被页面上的按钮点击事件触发
       const res = await wx.getUserProfile({
         desc: "用于完善用户资料", // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
       });
@@ -81,6 +107,7 @@ Page({
         setting: [1, 1, 1, 1],
       });
     } catch (error) {
+      console.log(error);
       wx.showToast({
         title: "获取用户信息失败",
         icon: "error",

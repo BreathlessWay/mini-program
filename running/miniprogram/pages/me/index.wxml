@@ -3,8 +3,11 @@
   <text>{{ userInfo.nickName }}</text>
 </block>
 <block wx:else>
-  <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile"> getUserProfile </button>
-  <button wx:else open-type="getUserInfo" bindgetuserinfo="getUserInfo"> getUserInfo </button>
+  <block wx:if="{{register}}">
+    <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile"> 注册getUserProfile </button>
+    <button wx:else open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 注册getUserInfo </button>
+  </block>
+  <button bindtap="login" wx:else>登录</button>
 </block>
 <view class="btn-area">
   <navigator url="/pages/plan/index" hover-class="navigator-hover">定个计划吧</navigator>
@@ -13,5 +16,5 @@
   <navigator url="/pages/bmi/index" hover-class="other-navigator-hover">算算身材如何</navigator>
   <navigator url="/pages/setting/index" hover-class="other-navigator-hover">洗心革面一下</navigator>
   <navigator url="/pages/about/index" hover-class="other-navigator-hover">这玩意儿怎么用</navigator>
-  <button wx:if="{{!userInfo}}" bindtap="logout">退出</button>
+  <button wx:if="{{userInfo}}" bindtap="logout">退出</button>
 </view>

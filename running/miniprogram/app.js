@@ -1,5 +1,7 @@
 import { envList } from "./envList";
 
+import { getUserInfo } from "./utils/auth";
+
 App({
   async onLaunch() {
     if (!wx.cloud) {
@@ -22,6 +24,6 @@ App({
     console.log(error);
   },
   globalData: {
-    userInfo: null,
+    userInfo: getUserInfo(),
   },
 });

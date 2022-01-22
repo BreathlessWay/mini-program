@@ -1,5 +1,5 @@
-import lget from "lodash.get";
 import dayjs from "dayjs";
+import lget from "lodash.get";
 
 const app = getApp();
 
@@ -32,7 +32,7 @@ Page({
     this.setData({
       userInfo: app.globalData.userInfo,
     });
-    if (!app.globalData.userInfo) {
+    if (app.globalData.userInfo) {
       try {
         wx.showNavigationBarLoading();
         await this.getOnShowData();
@@ -45,7 +45,9 @@ Page({
   async onPullDownRefresh() {
     try {
       await this.getOnLoadData();
-      await this.getOnShowData();
+      if (this.data.userInfo) {
+        await this.getOnShowData();
+      }
     } catch (error) {
     } finally {
       wx.stopPullDownRefresh();
