@@ -1,5 +1,5 @@
-const dayjs = require("dayjs");
-const lget = require("lodash.get");
+import lget from "lodash.get";
+import dayjs from "dayjs";
 
 Page({
   data: {

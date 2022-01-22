@@ -1,5 +1,5 @@
-const dayjs = require("dayjs");
-const lget = require("lodash.get");
+import dayjs from "dayjs";
+import lget from "lodash.get";
 
 const currentMonth = dayjs().format("YYYY-MM");
 

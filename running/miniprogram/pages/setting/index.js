@@ -1,6 +1,6 @@
-const app = getApp();
+import lget from "lodash.get";
 
-const lget = require("lodash.get");
+const app = getApp();
 
 Page({
   data: {

@@ -1,8 +1,1 @@
-<block wx:if="{{userInfo}}">
-  <image style="width: 200px; height: 200px; background-color: #eeeeee;" src="{{userInfo.avatarUrl}}"></image>
-  <text>{{ userInfo.nickName }}</text>
-</block>
-<block wx:else>
-  <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile"> getUserProfile </button>
-  <button wx:else open-type="getUserInfo" bindgetuserinfo="getUserInfo"> getUserInfo </button>
-</block>
+<text>首页</text>

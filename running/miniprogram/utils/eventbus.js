@@ -1,11 +1,11 @@
-const {
+import {
   validArrayParams,
   validFunctionParams,
   validObjectParams,
   validStringParams,
-} = require("./validParams");
+} from "./validParams";
 
-class EventBus {
+export default class EventBus {
   constructor(prefix) {
     this.prefix = prefix;
   }
@@ -126,5 +126,3 @@ class EventBus {
     this.listenMap = {};
   };
 }
-
-module.exports = EventBus

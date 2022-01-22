@@ -1,31 +1,31 @@
-const getType = require("./getType");
+import getType from './getType'
 
-exports.validStringParams = (params) => {
+export const validStringParams = (params) => {
   return params && getType.isString(params) && params.trim();
 };
 
-exports.validFunctionParams = (params) => {
+export const validFunctionParams = (params) => {
   return params && getType.isFunction(params);
 };
 
-exports.validArrayParams = (params) => {
+export const validArrayParams = (params) => {
   return params && getType.isArray(params) && params.length > 0;
 };
 
-exports.validObjectParams = (params) => {
+export const validObjectParams = (params) => {
   return params && getType.isObject(params) && Object.keys(params).length > 0;
 };
 
-exports.validObjectInstanceType = (params) => {
+export const validObjectInstanceType = (params) => {
   return (
     params && Object.prototype.toString.call(params) === `[object ${type}]`
   );
 };
 
-exports.validRegExpParams = (params) => {
+export const validRegExpParams = (params) => {
   return params && getType.isRegExp(params);
 };
 
-exports.validNumberParams = (params) => {
+export const validNumberParams = (params) => {
   return getType.isNumber(params) && !isNaN(params) && isFinite(params);
 };

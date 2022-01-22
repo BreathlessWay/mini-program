@@ -20,4 +20,4 @@ TypeList.forEach((type) => {
   };
 });
 
-module.exports = getType;
+export default getType

@@ -24,7 +24,7 @@ const login = async (cloud, event) => {
     return {
       errMsg: "",
       status: successStatus,
-      data: null
+      data: null,
     };
   }
   // event.userInfo 尽然在服务器上有值 fuck

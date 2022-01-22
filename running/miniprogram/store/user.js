@@ -1,5 +1,5 @@
-const EventBus = require("../utils/eventbus");
+import EventBus from "../utils/eventbus";
 
-exports.userStore = new EventBus("user");
+export const userStore = new EventBus("user");
 
-exports.SET_USER = "set_user";
+export const SET_USER = "set_user";

@@ -1,13 +1,17 @@
-<!--pages/me/index.wxml-->
 <block wx:if="{{userInfo}}">
   <image style="width: 200px; height: 200px; background-color: #eeeeee;" src="{{userInfo.avatarUrl}}"></image>
   <text>{{ userInfo.nickName }}</text>
-  <view class="btn-area">
-    <navigator url="/pages/plan/index" hover-class="navigator-hover">定个计划吧</navigator>
-    <navigator url="/pages/chart/index" hover-class="other-navigator-hover">看看运动了没</navigator>
-    <!-- <navigator url="/pages/chart/index" hover-class="other-navigator-hover">和别人比比</navigator> -->
-    <navigator url="/pages/bmi/index" hover-class="other-navigator-hover">算算身材如何</navigator>
-    <navigator url="/pages/setting/index" hover-class="other-navigator-hover">洗心革面一下</navigator>
-    <navigator url="/pages/about/index" hover-class="other-navigator-hover">这玩意儿怎么用</navigator>
-  </view>
 </block>
+<block wx:else>
+  <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile"> getUserProfile </button>
+  <button wx:else open-type="getUserInfo" bindgetuserinfo="getUserInfo"> getUserInfo </button>
+</block>
+<view class="btn-area">
+  <navigator url="/pages/plan/index" hover-class="navigator-hover">定个计划吧</navigator>
+  <navigator url="/pages/chart/index" hover-class="other-navigator-hover">看看运动了没</navigator>
+  <!-- <navigator url="/pages/chart/index" hover-class="other-navigator-hover">和别人比比</navigator> -->
+  <navigator url="/pages/bmi/index" hover-class="other-navigator-hover">算算身材如何</navigator>
+  <navigator url="/pages/setting/index" hover-class="other-navigator-hover">洗心革面一下</navigator>
+  <navigator url="/pages/about/index" hover-class="other-navigator-hover">这玩意儿怎么用</navigator>
+  <button wx:if="{{!userInfo}}" bindtap="logout">退出</button>
+</view>

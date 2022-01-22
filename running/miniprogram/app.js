@@ -1,7 +1,4 @@
-const { envList } = require("./envList");
-const { userStore, SET_USER } = require("./store/user");
-
-const lget = require("lodash.get");
+import { envList } from "./envList";
 
 App({
   async onLaunch() {
@@ -17,26 +14,6 @@ App({
         traceUser: true,
       });
     }
-    await this.login();
-  },
-  async login() {
-    try {
-      const userInfo = await wx.cloud.callFunction({
-        name: "running",
-        data: {
-          type: "login",
-        },
-      });
-      const userDetail = lget(userInfo, "result.data");
-      if (userDetail) {
-        userStore.trigger(SET_USER, userDetail);
-      }
-    } catch (error) {
-      wx.showToast({
-        title: "登录失败",
-        icon: "error",
-      });
-    }
   },
   onError(error) {
     console.log(error);
@@ -45,12 +22,6 @@ App({
     console.log(error);
   },
   globalData: {
-    userInfo: {
-      avatarUrl:
-        "https://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLicu70LG0j0RFukvz8SCrzB6gGRAAYibbzCFEVtiaib17G05q5wWFTMMos6RARVmK38Qf5ry9uico4oOQ/132",
-      gender: 0,
-      nickName: "曜灵",
-      setting: [1, 1, 1, 1],
-    },
+    userInfo: null,
   },
 });

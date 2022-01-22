@@ -1,13 +1,10 @@
+import lget from "lodash.get";
+import dayjs from "dayjs";
+
 const app = getApp();
-
-const dayjs = require("dayjs");
-const lget = require("lodash.get");
-
-const { userStore, SET_USER } = require("../../store/user");
 
 Page({
   data: {
-    canIUseGetUserProfile: false,
     userInfo: null,
     weatherData: null,
     holidayData: null,
@@ -20,17 +17,11 @@ Page({
     errMsg: [],
   },
   async onLoad() {
-    userStore.on(SET_USER, this.setUserInfo);
     try {
       wx.showLoading({
         title: "Running",
         mask: true,
       });
-      if (wx.getUserProfile) {
-        this.setData({
-          canIUseGetUserProfile: true,
-        });
-      }
       await this.getOnLoadData();
     } catch (e) {
     } finally {
@@ -38,10 +29,10 @@ Page({
     }
   },
   async onShow() {
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-      });
+    this.setData({
+      userInfo: app.globalData.userInfo,
+    });
+    if (!app.globalData.userInfo) {
       try {
         wx.showNavigationBarLoading();
         await this.getOnShowData();
@@ -81,36 +72,20 @@ Page({
       query: "",
     };
   },
-  onUnload() {
-    userStore.off(SET_USER, this.setUserInfo);
-  },
-  async setUserInfo(userInfo) {
-    app.globalData.userInfo = userInfo;
-    this.setData({
-      userInfo,
-    });
-    try {
-      wx.showNavigationBarLoading();
-      await this.getOnShowData();
-    } catch (error) {
-    } finally {
-      wx.hideNavigationBarLoading();
-    }
-  },
   getOnLoadData() {
     return Promise.all([
       this.getWeather(),
       this.getHoliday(),
-      this.getSoulSoup(),
-      this.getGushiData(),
-      this.getChengyuData(),
+      this.getNewsData(),
+      this.getHistoryData(),
     ]);
   },
   getOnShowData() {
     return Promise.all([
       this.getPlanData(),
-      this.getNewsData(),
-      this.getHistoryData(),
+      this.getSoulSoup(),
+      this.getGushiData(),
+      this.getChengyuData(),
     ]);
   },
   async getWeather() {
@@ -133,67 +108,6 @@ Page({
       this.setData({
         errMsg: this.data.errMsg.push("天气"),
       });
-    }
-  },
-  async getUserInfo(e) {
-    try {
-      wx.showLoading({
-        title: "登录中...",
-      });
-      await wx.cloud.callFunction({
-        name: "running",
-        data: {
-          type: "login",
-          user: e.detail.userInfo,
-        },
-      });
-
-      await this.setUserInfo({
-        avatarUrl: lget(e, "detail.userInfo.avatarUrl"),
-        gender: lget(e, "detail.userInfo.gender"),
-        nickName: lget(e, "detail.userInfo.nickName"),
-        setting: [1, 1, 1, 1],
-      });
-    } catch (error) {
-      wx.showToast({
-        title: "获取用户信息失败",
-        icon: "error",
-      });
-    } finally {
-      wx.hideLoading();
-    }
-  },
-  async getUserProfile(e) {
-    try {
-      wx.showLoading({
-        title: "登录中...",
-      });
-      // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认
-      // 开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
-      const res = await wx.getUserProfile({
-        desc: "用于完善用户资料", // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
-      });
-      await wx.cloud.callFunction({
-        name: "running",
-        data: {
-          type: "login",
-          user: res.userInfo,
-        },
-      });
-
-      await this.setUserInfo({
-        avatarUrl: lget(res, "userInfo.avatarUrl"),
-        gender: lget(res, "userInfo.gender"),
-        nickName: lget(res, "userInfo.nickName"),
-        setting: [1, 1, 1, 1],
-      });
-    } catch (error) {
-      wx.showToast({
-        title: "获取用户信息失败",
-        icon: "error",
-      });
-    } finally {
-      wx.hideLoading();
     }
   },
   async getSoulSoup() {
