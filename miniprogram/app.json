@@ -1,0 +1,25 @@
+{
+  "pages": [
+    "pages/index/index"
+  ],
+  "window": {
+    "backgroundColor": "#fff",
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "核酸提醒",
+    "navigationBarTextStyle": "black"
+  },
+  "usingComponents": {
+    "van-button": "@vant/weapp/button/index",
+    "van-toast": "@vant/weapp/toast/index",
+    "van-dialog": "@vant/weapp/dialog/index",
+    "van-icon": "@vant/weapp/icon/index",
+    "van-dropdown-menu": "@vant/weapp/dropdown-menu/index",
+    "van-dropdown-item": "@vant/weapp/dropdown-item/index",
+    "van-datetime-picker": "@vant/weapp/datetime-picker/index",
+    "van-popup": "@vant/weapp/popup/index",
+    "van-field": "@vant/weapp/field/index",
+    "van-count-down": "@vant/weapp/count-down/index"
+  },
+  "sitemapLocation": "sitemap.json"
+}

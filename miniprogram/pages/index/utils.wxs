@@ -1,0 +1,24 @@
+var formartTime = function (date) {
+  if (!date) {
+    return ""
+  }
+  date = getDate(date);
+  var o = {
+    'Y': date.getFullYear(),
+    "M": date.getMonth() + 1, // 月份
+    "D": date.getDate(), // 日
+    "H": date.getHours(), // 小时
+    "m": date.getMinutes(), // 分
+  };
+  var key = ['M', 'D', 'H', 'm'],
+    len = key.length;
+  for (var i = 0; i < len; i++) {
+    if (o[key[i]] < 10) {
+      o[key[i]] = '0' + o[key[i]];
+    }
+  }
+
+  return o.Y + '-' + o.M + '-' + o.D + ' ' + o.H + ':' + o.m
+}
+
+module.exports.formartTime = formartTime;
