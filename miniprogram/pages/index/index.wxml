@@ -3,10 +3,10 @@
 <banner userInfo="{{ userInfo }}" oneData="{{ oneData }}" soulSoupData="{{ soulSoupData }}" bindlogin="login" bindlogout="logout" register="{{ register }}" />
 <view wx:if="{{userInfo}}" class="time-wrap">
   <van-cell-group inset border="{{ false }}">
-    <van-cell title="最近一次核酸时间" value="{{ utils.formartTime(userInfo.lastHeSuanTime) || '尚未设置' }}" border="{{ false }}" label="为核酸采集时间" center size="large" bind:click="handleSetLastTime" />
-    <van-cell title="核酸结果有效时间" value="{{ userInfo.expiration ? userInfo.expiration + ' 小时' : '' }}" border="{{ false }}" size="large" bind:click="handleSetExpireTime" />
+    <van-cell title="最近一次核酸时间" value="{{ utils.formartTime(userInfo.lastHeSuanTime) || '尚未设置' }}" border="{{ false }}" label="为核酸采集时间" center size="large" bind:click="handleSetLastTime" is-link/>
+    <van-cell title="核酸结果有效时间" value="{{ userInfo.expiration ? userInfo.expiration + ' 小时' : '' }}" border="{{ false }}" size="large" bind:click="handleSetExpireTime" is-link/>
   </van-cell-group>
-  <view class="time-count">
+  <view class="time-count" wx:if="{{ userInfo.lastHeSuanTime }}">
     <block wx:if="{{ time }}">
       <text>距离核酸过期还有</text>
       <van-count-down use-slot time="{{ time }}" bind:change="handlTimeCountChange" class="time-count_list">

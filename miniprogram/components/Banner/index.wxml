@@ -3,7 +3,7 @@
   <view class="banner-tips">
     <text>{{ oneData.content }}</text>
     <view class="banner-date">
-      <text>——— {{ date }}</text>
+      <text>—— {{ date }}</text>
     </view>
   </view>
   <block wx:if="{{ !register }}">
