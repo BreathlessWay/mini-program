@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import lget from "lodash.get";
 
 import Toast from '@vant/weapp/toast/toast';
@@ -11,41 +10,13 @@ const app = getApp();
 
 Page({
   data: {
-    showPopup: false,
-    showDialog: false,
-    statusBarHeight: 0,
     soulSoupData: null,
     canIUseGetUserProfile: false,
     userInfo: null,
     register: false,
-    maxDate: new Date().getTime(),
-    formLastTime: new Date().getTime(),
-    formatter(type, value) {
-      if (type === 'year') {
-        return `${value}年`;
-      }
-      if (type === 'month') {
-        return `${Number(value)}月`;
-      }
-      if (type === 'day') {
-        return `${Number(value)}日`;
-      }
-      if (type === 'hour') {
-        return `${Number(value)}时`;
-      }
-      if (type === 'minute') {
-        return `${Number(value)}分`;
-      }
-      return value;
-    },
-    expirationError: false,
-    expirationInputValue: null,
     time: null
   },
   async onLoad() {
-    this.setData({
-      statusBarHeight: wx.getSystemInfoSync()['statusBarHeight']
-    });
     if (wx.getUserProfile) {
       this.setData({
         canIUseGetUserProfile: true,
@@ -161,24 +132,6 @@ Page({
       });
     }
   },
-  handleSelectSetting(e) {
-    // currentTarget 事件触发【函数】绑定的元素
-    // target 事件触发的元素
-    const selectItem = e.currentTarget.dataset.setting;
-    this.selectComponent('#item').toggle();
-    if (selectItem === '0') {
-      this.setData({
-        showPopup: true
-      })
-      return
-    }
-    if (selectItem === '1') {
-      this.setData({
-        showDialog: true
-      })
-      return
-    }
-  },
   async updateUserInfo(data, errMsg) {
     try {
       Toast.loading({
@@ -200,28 +153,11 @@ Page({
       Toast.clear()
     }
   },
-  async handleSetLastTime(e) {
-    this.setData({
-      showPopup: false
-    })
-    await this.updateUserInfo({
-      lastHeSuanTime: e.detail
-    }, '设置最近一次核酸时间失败')
-  },
-  handleCancelSetLastTime() {
-    this.setData({
-      showPopup: false
-    })
-  },
-  handleCloseDialog() {
-    this.setData({
-      expirationInputValue: lget(this, 'data.userInfo.expiration'),
-      showDialog: false
-    })
-  },
-  async handleConfirmDialog() {
-    await this.updateUserInfo({
-      expiration: this.data.expirationInputValue
-    }, '设置核酸有效时间失败')
+  updateTime(e) {
+    const {
+      data,
+      errMsg
+    } = e.detail
+    this.updateUserInfo(data, errMsg)
   }
 });

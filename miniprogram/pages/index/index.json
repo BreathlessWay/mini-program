@@ -1,5 +1,6 @@
 {
   "usingComponents": {
+    "nav-header": "../../components/Header/index"
   },
   "navigationStyle": "custom"
 }

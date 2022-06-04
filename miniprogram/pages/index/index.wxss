@@ -1,10 +1,1 @@
 @import '../../miniprogram_npm/@vant/weapp/button/index.wxss';
-
-.setting-item {
-  padding: 20rpx;
-  font-size: 28rpx;
-}
-
-.dialog-input{
-  padding: 60rpx;
-}

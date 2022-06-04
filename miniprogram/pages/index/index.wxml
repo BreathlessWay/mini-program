@@ -1,15 +1,6 @@
 <wxs module="utils" src="./utils.wxs" />
+<nav-header lastHeSuanTime="{{ userInfo ? userInfo.lastHeSuanTime : undefined }}" expiration="{{ userInfo ? userInfo.expiration : undefined }}" bindupdateTime="updateTime" />
 <block wx:if="{{userInfo}}">
-  <van-dropdown-menu active-color="#1989fa" dropdown-style="padding-top:{{statusBarHeight}}px">
-    <van-dropdown-item id="item" title="核酸提醒">
-      <view class="setting-item van-hairline--bottom" data-setting="0" bindtap="handleSelectSetting">
-        <text>设置最近一次核酸时间</text>
-      </view>
-      <view class="setting-item" data-setting="1" bindtap="handleSelectSetting">
-        <text>设置核酸有效时间</text>
-      </view>
-    </van-dropdown-item>
-  </van-dropdown-menu>
   <image style="width: 200px; height: 200px; background-color: #eeeeee;" src="{{userInfo.avatarUrl}}"></image>
   <view>
     <text>{{ userInfo.nickName }}</text>
@@ -22,7 +13,7 @@
   </view>
   <view>
     <text>距离核酸过期还有：</text>
-    <van-count-down time="{{ time }}" format="DD 天 HH 时 mm 分"/>
+    <van-count-down time="{{ time }}" format="DD 天 HH 时 mm 分" />
   </view>
   <view>
     <text>核酸结果有效时间：{{ userInfo.expiration ? userInfo.expiration + ' 小时' : '' }}</text>
@@ -38,14 +29,6 @@
       <van-icon size="1.2em" name="manager-o" class="van-button__icon" custom-style="line-height: inherit;" />
       <view class="van-button__text">注册新用户</view>
     </button>
-  </block>custom-dialog
+  </block>
 </block>
-<van-dialog use-slot title="核酸有效时间(单位：小时)" show="{{ showDialog }}" show-cancel-button bind:close="handleCloseDialog" bind:confirm="handleConfirmDialog">
-  <view class="dialog-input">
-    <van-field model:value="{{ expirationInputValue }}" placeholder="请输入核酸有效时间" error="{{ expirationError }}" input-align="center" clearable type="number" />
-  </view>
-</van-dialog>
-<van-popup show="{{ showPopup }}" round bind:close="onClose" position="bottom" custom-style="height:320px" bind:close="onClose">
-  <van-datetime-picker type="datetime" value="{{ userInfo.lastHeSuanTime || formLastTime }}" title="最近一次核酸时间" max-date="{{ maxDate }}" formatter="{{ formatter }}" bind:confirm="handleSetLastTime" bind:cancel="handleCancelSetLastTime" />
-</van-popup>
 <van-toast id="van-toast" />
