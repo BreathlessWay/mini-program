@@ -1,5 +1,7 @@
 import lget from "lodash.get";
 
+import Toast from '@vant/weapp/toast/toast';
+
 Component({
   /**
    * 组件的属性列表
@@ -12,6 +14,10 @@ Component({
     expiration: {
       type: Number,
       value: null
+    },
+    isLogin: {
+      type: Boolean,
+      value: false
     }
   },
   observers: {
@@ -51,6 +57,12 @@ Component({
       }
       return value;
     },
+    beforeClose(action) {
+      if (action === 'confirm') {
+        return false;
+      }
+      return true;
+    }
   },
 
   attached() {
@@ -67,6 +79,11 @@ Component({
       // target 事件触发的元素
       const selectItem = e.currentTarget.dataset.setting;
       this.selectComponent('#item').toggle();
+      if (!this.data.isLogin) {
+        Toast('尚未登录，请先登录！');
+        return
+      }
+
       if (selectItem === '0') {
         this.setData({
           showPopup: true
@@ -80,7 +97,7 @@ Component({
         return
       }
     },
-    async handleSetLastTime(e) {
+    handleSetLastTime(e) {
       this.setData({
         showPopup: false
       })
@@ -91,7 +108,7 @@ Component({
         errMsg: '设置最近一次核酸时间失败'
       })
     },
-    handleCancelSetLastTime() {
+    handleCloseSetLastTime() {
       this.setData({
         showPopup: false
       })
@@ -99,16 +116,31 @@ Component({
     handleCloseDialog() {
       this.setData({
         expirationInputValue: lget(this, 'data.expiration'),
-        showDialog: false
+        showDialog: false,
+        expirationError: false,
+        expirationErrorMsg: ''
       })
     },
-    async handleConfirmDialog() {
-      this.triggerEvent('updateTime', {
-        data: {
-          expiration: this.data.expirationInputValue
-        },
-        errMsg: '设置核酸有效时间失败'
-      })
+    handleConfirmDialog() {
+      const expirationInputValue = this.data.expirationInputValue;
+      if (expirationInputValue < 24) {
+        this.setData({
+          expirationError: true,
+          expirationErrorMsg: '核酸有效时间需要大于24小时'
+        })
+      } else {
+        this.setData({
+          expirationError: false,
+          expirationErrorMsg: '',
+          showDialog: false,
+        })
+        this.triggerEvent('updateTime', {
+          data: {
+            expiration: this.data.expirationInputValue
+          },
+          errMsg: '设置核酸有效时间失败'
+        })
+      }
     }
   }
 })

@@ -1,6 +1,8 @@
 {
   "usingComponents": {
-    "nav-header": "../../components/Header/index"
+    "nav-header": "../../components/Header/index",
+    "login": "../../components/Login/index",
+    "intro": "../../components/Intro/index"
   },
   "navigationStyle": "custom"
 }

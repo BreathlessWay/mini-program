@@ -3,7 +3,8 @@ import lget from "lodash.get";
 import Toast from '@vant/weapp/toast/toast';
 
 import {
-  setUserInfo
+  setUserInfo,
+  removeUserInfo
 } from "../../utils/auth";
 
 const app = getApp();
@@ -11,17 +12,21 @@ const app = getApp();
 Page({
   data: {
     soulSoupData: null,
-    canIUseGetUserProfile: false,
+    oneData: null,
     userInfo: null,
     register: false,
     time: null
   },
   async onLoad() {
-    if (wx.getUserProfile) {
-      this.setData({
-        canIUseGetUserProfile: true,
-      });
-    }
+    const oneDataResult = await wx.cloud.callFunction({
+      name: "hesuan",
+      data: {
+        type: "one",
+      },
+    });
+    this.setData({
+      oneData: lget(oneDataResult, 'result.data')
+    })
   },
   async onShow() {
     if (app.globalData.userInfo) {
@@ -36,12 +41,9 @@ Page({
       }
       this.setData({
         userInfo: app.globalData.userInfo,
-        expirationInputValue: lget(app.globalData.userInfo, 'expiration'),
         time
       });
       await this.getSoulSoup()
-    } else {
-      await this.login()
     }
   },
   async login() {
@@ -72,6 +74,14 @@ Page({
       Toast.clear();
     }
   },
+  logout() {
+    this.setData({
+      soulSoupData: null,
+      userInfo: null,
+      time: null
+    })
+    removeUserInfo()
+  },
   async setUserInfo(userInfo) {
     app.globalData.userInfo = userInfo;
     const {
@@ -85,7 +95,6 @@ Page({
     }
     this.setData({
       userInfo,
-      expirationInputValue: lget(userInfo, 'expiration'),
       time
     });
     const {
@@ -97,25 +106,8 @@ Page({
     setUserInfo(rest);
     await this.getSoulSoup()
   },
-  async getUserInfo(e) {
-    await this.updateUserInfo(e.detail.userInfo, '获取用户信息失败')
-  },
-  async getUserProfile() {
-    try {
-      // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认
-      // 开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
-      // 只能在外层才能触发，只能被页面上的按钮点击事件触发
-      const res = await wx.getUserProfile({
-        desc: "用于完善用户资料", // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
-      });
-      await this.updateUserInfo(res.userInfo, '获取用户信息失败')
-    } catch (error) {
-      Toast.fail('获取用户信息失败');
-    } finally {
-      Toast.clear()
-    }
-  },
   async getSoulSoup() {
+    if (this.data.soulSoupData) return
     try {
       const soulSoup = await wx.cloud.callFunction({
         name: "hesuan",
@@ -126,11 +118,7 @@ Page({
       this.setData({
         soulSoupData: lget(soulSoup, "result.data"),
       });
-    } catch (error) {
-      this.setData({
-        errMsg: this.data.errMsg.push("鸡汤"),
-      });
-    }
+    } catch (error) {}
   },
   async updateUserInfo(data, errMsg) {
     try {
@@ -153,7 +141,7 @@ Page({
       Toast.clear()
     }
   },
-  updateTime(e) {
+  emitUpdateUserInfo(e) {
     const {
       data,
       errMsg

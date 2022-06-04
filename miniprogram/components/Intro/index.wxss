@@ -1,0 +1,9 @@
+@import '../../miniprogram_npm/@vant/weapp/common/index.wxss';
+
+.intro{
+  margin: 20rpx;
+  padding: 20rpx;
+  font-size: 24rpx;
+  color: #646566;
+  line-height: 1.6;
+}

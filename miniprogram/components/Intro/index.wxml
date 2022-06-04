@@ -1,0 +1,3 @@
+<view class="intro van-hairline--surround">
+  <text>Tips: 一个核酸有效期倒计时小助手，需要手动设置核酸采样时间，核酸时间是核酸登记采样的时间，并非核酸结果出来的时间，会在核酸即将到期前24小时，推送告知！</text>
+</view>

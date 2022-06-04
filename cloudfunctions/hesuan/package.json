@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cheerio": "^1.0.0-rc.11",
     "dayjs": "^1.10.7",
     "lodash": "^4.17.21",
     "module-alias": "^2.2.2",

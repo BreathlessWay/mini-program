@@ -1,5 +1,5 @@
 <wxs module="utils" src="./utils.wxs" />
-<nav-header lastHeSuanTime="{{ userInfo ? userInfo.lastHeSuanTime : undefined }}" expiration="{{ userInfo ? userInfo.expiration : undefined }}" bindupdateTime="updateTime" />
+<nav-header lastHeSuanTime="{{ userInfo ? userInfo.lastHeSuanTime : undefined }}" expiration="{{ userInfo ? userInfo.expiration : undefined }}" isLogin="{{ !!userInfo }}" bindupdateTime="emitUpdateUserInfo" />
 <block wx:if="{{userInfo}}">
   <image style="width: 200px; height: 200px; background-color: #eeeeee;" src="{{userInfo.avatarUrl}}"></image>
   <view>
@@ -21,14 +21,8 @@
 </block>
 <block wx:else>
   <block wx:if="{{register}}">
-    <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile" class="van-button van-button--info van-button--normal van-button--plain" hover-class="van-button--active hover-class">
-      <van-icon size="1.2em" name="manager-o" class="van-button__icon" custom-style="line-height: inherit;" />
-      <view class="van-button__text">注册新用户</view>
-    </button>
-    <button wx:else open-type="getUserInfo" bindgetuserinfo="getUserInfo" class="van-button van-button--info van-button--normal van-button--plain" hover-class="van-button--active hover-class">
-      <van-icon size="1.2em" name="manager-o" class="van-button__icon" custom-style="line-height: inherit;" />
-      <view class="van-button__text">注册新用户</view>
-    </button>
+    <login bindupdateUserInfo="emitUpdateUserInfo"/>
   </block>
 </block>
+<intro/>
 <van-toast id="van-toast" />
