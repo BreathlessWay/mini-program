@@ -52,6 +52,18 @@ Page({
       await this.getSoulSoup()
     }
   },
+  onShareAppMessage() {
+    return {
+      title: '快来看看你的核酸快过期了没',
+      imageUrl: '../../images/9eaf88140610a50ac7f7dead40b41c7c.jpeg'
+    }
+  },
+  onShareTimeline() {
+    return {
+      title: '快来看看你的核酸快过期了没',
+      imageUrl: '../../images/f3237e65947dce3670ec424b773ea6f7.jpeg'
+    }
+  },
   async login() {
     try {
       Toast.loading({
