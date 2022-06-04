@@ -55,7 +55,7 @@ Page({
   onShareAppMessage() {
     return {
       title: '快来看看你的核酸快过期了没',
-      imageUrl: '../../images/9eaf88140610a50ac7f7dead40b41c7c.jpeg'
+      imageUrl: '../../images/9eaf88140610a50ac7f7dead40b41c7c.png'
     }
   },
   onShareTimeline() {
