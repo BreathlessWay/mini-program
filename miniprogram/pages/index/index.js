@@ -9,6 +9,8 @@ import {
 
 const app = getApp();
 
+const timeGap = 24 * 60 * 60 * 1000;
+
 Page({
   data: {
     soulSoupData: null,
@@ -18,7 +20,8 @@ Page({
     time: null,
     timeData: {},
     showExpireTime: false,
-    showLastTime: false
+    showLastTime: false,
+    timeGap
   },
   async onLoad() {
     const oneDataResult = await wx.cloud.callFunction({

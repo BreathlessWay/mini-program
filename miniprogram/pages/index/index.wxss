@@ -8,12 +8,13 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 40rpx 0;
+  padding-top: 40rpx;
   color: #ff976a
 }
 
-.time-count_title {
-  margin-bottom: 60rpx;
+.time-count_list {
+  margin-top: 60rpx;
+  margin-bottom: 40rpx;
 }
 
 .time-count_item {
@@ -24,4 +25,16 @@
   background-color: #07c160;
   border-radius: 2px;
   padding: 6rpx 14rpx;
+}
+
+.time-count_warn {
+  padding: 0 60rpx;
+  color: #ee0a24;
+  font-size: 36rpx;
+  font-weight: bold;
+}
+
+.time-count_tips {
+  color: #ee0a24;
+  font-size: 24rpx;
 }

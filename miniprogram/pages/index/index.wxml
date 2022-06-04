@@ -7,12 +7,18 @@
     <van-cell title="核酸结果有效时间" value="{{ userInfo.expiration ? userInfo.expiration + ' 小时' : '' }}" border="{{ false }}" size="large" bind:click="handleSetExpireTime" />
   </van-cell-group>
   <view class="time-count">
-    <text class="time-count_title">距离核酸过期还有</text>
-    <van-count-down use-slot time="{{ time }}" bind:change="handlTimeCountChange">
-      <text class="time-count_item">{{ timeData.days }}</text>天
-      <text class="time-count_item">{{ timeData.hours }}</text>小时
-      <text class="time-count_item">{{ timeData.minutes }}</text>分
-    </van-count-down>
+    <block wx:if="{{ time }}">
+      <text>距离核酸过期还有</text>
+      <van-count-down use-slot time="{{ time }}" bind:change="handlTimeCountChange" class="time-count_list">
+        <text class="time-count_item">{{ timeData.days }}</text>天
+        <text class="time-count_item">{{ timeData.hours }}</text>小时
+        <text class="time-count_item">{{ timeData.minutes }}</text>分
+      </van-count-down>
+      <text wx:if="{{ time<timeGap }}" class="time-count_tips">核酸不足24小时啦，建议及时续杯</text>
+    </block>
+    <view wx:else class="time-count_warn">
+      <text>核酸已经过期啦，建议尽快前往核酸采样点做核酸哦，不然出不了门啦</text>
+    </view>
   </view>
 </view>
 <block wx:else>
