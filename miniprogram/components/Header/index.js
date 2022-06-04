@@ -17,6 +17,14 @@ Component({
     isLogin: {
       type: Boolean,
       value: false
+    },
+    showLastTime: {
+      type: Boolean,
+      value: false
+    },
+    showExpireTime: {
+      type: Boolean,
+      value: false
     }
   },
   observers: {
@@ -30,9 +38,9 @@ Component({
    * 组件的初始数据
    */
   data: {
-    statusBarHeight: 0,
     showPopup: false,
     showDialog: false,
+    statusBarHeight: 0,
     expirationInputValue: 0,
     expirationError: false,
     expirationErrorMsg: '',
@@ -65,9 +73,9 @@ Component({
   },
 
   attached() {
-    this.setData({
-      statusBarHeight: wx.getSystemInfoSync()['statusBarHeight']
-    });
+    // this.setData({
+    //   statusBarHeight: wx.getSystemInfoSync()['statusBarHeight']
+    // });
   },
   /**
    * 组件的方法列表
@@ -97,27 +105,27 @@ Component({
       }
     },
     handleSetLastTime(e) {
-      this.setData({
-        showPopup: false
-      })
       this.triggerEvent('updateTime', {
         data: {
           lastHeSuanTime: e.detail
         },
+        status: 'showLastTime',
         errMsg: '设置最近一次核酸时间失败'
       })
     },
     handleCloseSetLastTime() {
-      this.setData({
-        showPopup: false
+      this.triggerEvent('updateTime', {
+        status: 'showLastTime',
       })
     },
     handleCloseDialog() {
       this.setData({
         expirationInputValue: lget(this, 'data.expiration'),
-        showDialog: false,
         expirationError: false,
         expirationErrorMsg: ''
+      })
+      this.triggerEvent('updateTime', {
+        status: 'showExpireTime',
       })
     },
     handleConfirmDialog() {
@@ -131,12 +139,12 @@ Component({
         this.setData({
           expirationError: false,
           expirationErrorMsg: '',
-          showDialog: false,
         })
         this.triggerEvent('updateTime', {
           data: {
             expiration: this.data.expirationInputValue
           },
+          status: 'showExpireTime',
           errMsg: '设置核酸有效时间失败'
         })
       }

@@ -4,6 +4,5 @@
     "banner": "../../components/Banner/index",
     "login": "../../components/Login/index",
     "intro": "../../components/Intro/index"
-  },
-  "navigationStyle": "custom"
+  }
 }

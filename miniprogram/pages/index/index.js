@@ -15,7 +15,10 @@ Page({
     oneData: null,
     userInfo: null,
     register: false,
-    time: null
+    time: null,
+    timeData: {},
+    showExpireTime: false,
+    showLastTime: false
   },
   async onLoad() {
     const oneDataResult = await wx.cloud.callFunction({
@@ -144,11 +147,30 @@ Page({
   emitUpdateUserInfo(e) {
     const {
       data,
-      errMsg
+      errMsg,
+      status
     } = e.detail
-    this.updateUserInfo(data, errMsg)
+    if (data) {
+      this.updateUserInfo(data, errMsg)
+    }
     this.setData({
-      register: false
+      register: false,
+      [status]: false
     })
-  }
+  },
+  handleSetLastTime() {
+    this.setData({
+      showLastTime: true
+    })
+  },
+  handleSetExpireTime() {
+    this.setData({
+      showExpireTime: true,
+    })
+  },
+  handlTimeCountChange(e) {
+    this.setData({
+      timeData: e.detail,
+    });
+  },
 });

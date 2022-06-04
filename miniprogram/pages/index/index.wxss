@@ -2,3 +2,26 @@
   padding: 40rpx 0;
   color: #323233;
 }
+
+.time-count {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40rpx 0;
+  color: #ff976a
+}
+
+.time-count_title {
+  margin-bottom: 60rpx;
+}
+
+.time-count_item {
+  margin-right: 5px;
+  color: #fff;
+  font-size: 60rpx;
+  text-align: center;
+  background-color: #07c160;
+  border-radius: 2px;
+  padding: 6rpx 14rpx;
+}

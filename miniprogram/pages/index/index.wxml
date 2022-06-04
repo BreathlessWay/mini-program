@@ -1,15 +1,19 @@
 <wxs module="utils" src="./utils.wxs" />
-<nav-header lastHeSuanTime="{{ userInfo ? userInfo.lastHeSuanTime : undefined }}" expiration="{{ userInfo ? userInfo.expiration : undefined }}" isLogin="{{ !!userInfo }}" bindupdateTime="emitUpdateUserInfo" />
+<nav-header lastHeSuanTime="{{ userInfo ? userInfo.lastHeSuanTime : undefined }}" expiration="{{ userInfo ? userInfo.expiration : undefined }}" isLogin="{{ !!userInfo }}" showLastTime="{{ showLastTime }}" showExpireTime="{{ showExpireTime }}" bindupdateTime="emitUpdateUserInfo" />
 <banner userInfo="{{ userInfo }}" oneData="{{ oneData }}" soulSoupData="{{ soulSoupData }}" bindlogin="login" bindlogout="logout" register="{{ register }}" />
 <view wx:if="{{userInfo}}" class="time-wrap">
   <van-cell-group inset border="{{ false }}">
-    <van-cell title="最近一次核酸时间" value="{{ utils.formartTime(userInfo.lastHeSuanTime) || '尚未设置' }}" border="{{ false }}" label="此时间为核酸采集时间" center />
-    <van-cell title="核酸结果有效时间" value="{{ userInfo.expiration ? userInfo.expiration + ' 小时' : '' }}" border="{{ false }}" />
+    <van-cell title="最近一次核酸时间" value="{{ utils.formartTime(userInfo.lastHeSuanTime) || '尚未设置' }}" border="{{ false }}" label="为核酸采集时间" center size="large" bind:click="handleSetLastTime" />
+    <van-cell title="核酸结果有效时间" value="{{ userInfo.expiration ? userInfo.expiration + ' 小时' : '' }}" border="{{ false }}" size="large" bind:click="handleSetExpireTime" />
   </van-cell-group>
-  <!-- <view>
-    <text>距离核酸过期还有：</text>
-    <van-count-down time="{{ time }}" format="DD 天 HH 时 mm 分" />
-  </view> -->
+  <view class="time-count">
+    <text class="time-count_title">距离核酸过期还有</text>
+    <van-count-down use-slot time="{{ time }}" bind:change="handlTimeCountChange">
+      <text class="time-count_item">{{ timeData.days }}</text>天
+      <text class="time-count_item">{{ timeData.hours }}</text>小时
+      <text class="time-count_item">{{ timeData.minutes }}</text>分
+    </van-count-down>
+  </view>
 </view>
 <block wx:else>
   <block wx:if="{{register}}">
