@@ -1,6 +1,7 @@
 {
   "usingComponents": {
     "nav-header": "../../components/Header/index",
+    "banner": "../../components/Banner/index",
     "login": "../../components/Login/index",
     "intro": "../../components/Intro/index"
   },

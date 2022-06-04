@@ -1,5 +1,5 @@
 <van-dropdown-menu active-color="#1989fa" dropdown-style="padding-top:{{statusBarHeight}}px">
-  <van-dropdown-item id="item" title="核酸提醒">
+  <van-dropdown-item id="item" title="核酸提醒小助手">
     <view class="setting-item ~van-hairline--bottom" data-setting="0" bindtap="handleSelectSetting">
       <text>设置最近一次核酸时间</text>
     </view>
@@ -15,5 +15,5 @@
   </view>
 </van-dialog>
 <van-popup show="{{ showPopup }}" round position="bottom" custom-style="height:320px" close-on-click-overlay bind:close="handleCloseSetLastTime">
-  <van-datetime-picker type="datetime" value="{{ lastHeSuanTime }}" title="最近一次核酸时间" max-date="{{ maxDate }}" formatter="{{ formatter }}" bind:confirm="handleSetLastTime" bind:cancel="handleCloseSetLastTime" />
+  <van-datetime-picker type="datetime" value="{{ lastHeSuanTime||formLastTime }}" title="最近一次核酸时间" max-date="{{ maxDate }}" formatter="{{ formatter }}" bind:confirm="handleSetLastTime" bind:cancel="handleCloseSetLastTime" />
 </van-popup>

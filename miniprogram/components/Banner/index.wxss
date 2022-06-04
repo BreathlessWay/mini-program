@@ -1,0 +1,40 @@
+.banner-wrap {
+  position: relative;
+}
+
+.banner-tips {
+  background-color: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  font-size: 24rpx;
+  padding: 20rpx 30rpx;
+  position: absolute;
+  bottom: 0;
+}
+
+.banner-date {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.banner-login {
+  position: absolute;
+  top: 40rpx;
+  right: 0;
+  background: #dcdee0;
+  border-radius: 32rpx 0 0 32rpx;
+  padding: 8rpx 8rpx 8rpx 18rpx;
+  font-size: 24rpx;
+  color: #1989fa;
+  display: flex;
+  align-items: center;
+}
+
+.banner-login_btn {
+  padding-left: 6rpx;
+}
+
+.banner-avatar {
+  border-radius: 50%;
+  width: 40rpx;
+  margin-right: 4rpx;
+}

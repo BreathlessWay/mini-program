@@ -147,5 +147,8 @@ Page({
       errMsg
     } = e.detail
     this.updateUserInfo(data, errMsg)
+    this.setData({
+      register: false
+    })
   }
 });

@@ -1,0 +1,4 @@
+.time-wrap {
+  padding: 40rpx 0;
+  color: #323233;
+}

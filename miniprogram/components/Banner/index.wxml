@@ -1,0 +1,19 @@
+<view wx:if="oneData" class="banner-wrap">
+  <image style="width: 100%; background-color: #eeeeee; display: block;" mode="widthFix" src="{{oneData.image}}" />
+  <view class="banner-tips">
+    <text>{{ oneData.content }}</text>
+    <view class="banner-date">
+      <text>——— {{ date }}</text>
+    </view>
+  </view>
+  <block wx:if="{{ !register }}">
+    <view class="banner-login" wx:if="{{ !userInfo }}" bindtap="handleLogin">
+      <van-icon name="contact" />
+      <text class="banner-login_btn">登录</text>
+    </view>
+    <view class="banner-login" wx:else bindtap="handleLogout">
+      <image class="banner-avatar" mode="widthFix" src="{{userInfo.avatarUrl}}"></image>
+      <text class="banner-login_btn">退出</text>
+    </view>
+  </block>
+</view>

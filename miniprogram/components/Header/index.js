@@ -8,8 +8,7 @@ Component({
    */
   properties: {
     lastHeSuanTime: {
-      type: Number,
-      value: new Date().getTime()
+      type: Number
     },
     expiration: {
       type: Number,
