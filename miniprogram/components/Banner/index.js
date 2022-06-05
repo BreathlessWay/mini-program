@@ -12,9 +12,6 @@ Component({
     oneData: {
       type: Object,
     },
-    soulSoupData: {
-      type: Object
-    },
     register: {
       type: Boolean
     }

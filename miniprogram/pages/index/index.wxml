@@ -1,6 +1,6 @@
 <wxs module="utils" src="./utils.wxs" />
 <nav-header lastHeSuanTime="{{ userInfo ? userInfo.lastHeSuanTime : undefined }}" expiration="{{ userInfo ? userInfo.expiration : undefined }}" isLogin="{{ !!userInfo }}" showLastTime="{{ showLastTime }}" showExpireTime="{{ showExpireTime }}" bindupdateTime="emitUpdateUserInfo" />
-<banner userInfo="{{ userInfo }}" oneData="{{ oneData }}" soulSoupData="{{ soulSoupData }}" bindlogin="login" bindlogout="logout" register="{{ register }}" />
+<banner userInfo="{{ userInfo }}" oneData="{{ oneData }}" bindlogin="login" bindlogout="logout" register="{{ register }}" />
 <view wx:if="{{userInfo}}" class="time-wrap">
   <van-cell-group inset border="{{ false }}">
     <van-cell title="最近一次核酸时间" value="{{ utils.formartTime(userInfo.lastHeSuanTime) || '尚未设置' }}" border="{{ false }}" label="为核酸采集时间" center size="large" bind:click="handleSetLastTime" is-link/>
