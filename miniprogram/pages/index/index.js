@@ -49,7 +49,7 @@ Page({
         userInfo: app.globalData.userInfo,
         time
       });
-      await this.getSoulSoup()
+      // await this.getSoulSoup()
     }
   },
   onShareAppMessage() {
@@ -80,7 +80,7 @@ Page({
       const userDetail = lget(userInfo, "result.data");
       if (userDetail) {
         this.setUserInfo(userDetail);
-        await this.getSoulSoup()
+        // await this.getSoulSoup()
       } else {
         this.setData({
           register: true,
@@ -122,7 +122,7 @@ Page({
       ...rest
     } = userInfo
     setUserInfo(rest);
-    await this.getSoulSoup()
+    // await this.getSoulSoup()
   },
   async getSoulSoup() {
     if (this.data.soulSoupData) return
