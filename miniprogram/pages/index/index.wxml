@@ -8,7 +8,7 @@
   </van-cell-group>
   <view class="time-count" wx:if="{{ userInfo.lastHeSuanTime }}">
     <block wx:if="{{ time }}">
-      <text>距离核酸过期还有</text>
+      <text bindtap="handleNotice">距离核酸过期还有</text>
       <van-count-down use-slot time="{{ time }}" bind:change="handlTimeCountChange" class="time-count_list">
         <text class="time-count_item">{{ timeData.days }}</text>天
         <text class="time-count_item">{{ timeData.hours }}</text>小时

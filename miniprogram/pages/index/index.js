@@ -188,5 +188,15 @@ Page({
     this.setData({
       timeData: e.detail,
     });
+  },
+  async handleNotice() {
+    try {
+      const result = await wx.cloud.callFunction({
+        name: "notice"
+      });
+      console.log(result)
+    } catch (error) {
+      console.log(error)
+    }
   }
 });
