@@ -40,7 +40,7 @@ exports.main = async () => {
           "touser": OPENID,
           "page": 'pages/index/index',
           "templateId": '1AJpNVMAJEYqa9pm3laXCokhJzoev-HiMDXjE6rSSTs',
-          "miniprogramState": 'developer',
+          "miniprogramState": 'formal',
           "lang": 'zh_CN',
           "data": {
             "thing1": {
