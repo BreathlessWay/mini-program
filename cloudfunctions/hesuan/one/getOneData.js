@@ -25,7 +25,7 @@ const getSoulSoupFromApi = async (cloud) => {
       item$ = cheerio.load(itemHtml),
       image = item$('.fp-one-imagen').attr('src'),
       content = item$('.fp-one-cita a').text(),
-      date = dayjs().endOf('day').valueOf();
+      date = dayjs().endOf('day').add(6, 'hour').valueOf();
 
     if (!content) {
       throw "";

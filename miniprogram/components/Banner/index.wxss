@@ -6,7 +6,7 @@
   background-color: rgba(0, 0, 0, 0.4);
   color: #fff;
   font-size: 24rpx;
-  padding: 20rpx 18rpx 10rpx;
+  padding: 16rpx 18rpx;
   position: absolute;
   bottom: 0;
   line-height: 1.6;
@@ -15,6 +15,7 @@
 }
 
 .banner-date {
+  margin-top: 10rpx;
   line-height: 1;
   display: flex;
   justify-content: flex-end;

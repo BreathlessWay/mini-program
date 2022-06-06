@@ -11,7 +11,7 @@ const getOne = async (cloud) => {
   const commonMapCollection = cloud.database().collection(commonMapDbName),
     commonResult = await commonMapCollection.get(),
     oneResult = lget(commonResult, "data.0");
-
+    
   const {
     date,
   } = oneResult || {},
