@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "openapi": [
+      "ubscribeMessage.send"
+    ]
+  },
+  "triggers": [
+    {
+      "name": "notice_trigger",
+      "type": "timer",
+      "config": "0 0 */1 * * * *"
+    }
+  ]
+}

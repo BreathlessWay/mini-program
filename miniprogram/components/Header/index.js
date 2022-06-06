@@ -14,9 +14,8 @@ Component({
       type: Number,
       value: null
     },
-    isLogin: {
-      type: Boolean,
-      value: false
+    userInfo: {
+      type: Object
     },
     showLastTime: {
       type: Boolean,
@@ -86,7 +85,7 @@ Component({
       // target 事件触发的元素
       const selectItem = e.currentTarget.dataset.setting;
       this.selectComponent('#item').toggle();
-      if (!this.data.isLogin) {
+      if (!this.data.userInfo) {
         Toast('尚未登录，请先登录！');
         return
       }
@@ -104,14 +103,24 @@ Component({
         return
       }
     },
-    handleSetLastTime(e) {
+    async handleSetLastTime(e) {
       this.triggerEvent('updateTime', {
         data: {
-          lastHeSuanTime: e.detail
+          lastHeSuanTime: e.detail,
+          shouldNotice: true
         },
         status: 'showLastTime',
         errMsg: '设置最近一次核酸时间失败'
       })
+
+      const shouldNotice = lget(this, 'data.userInfo.shouldNotice');
+
+      if (shouldNotice) return;
+      try {
+        await wx.requestSubscribeMessage({
+          tmplIds: ['1AJpNVMAJEYqa9pm3laXCokhJzoev-HiMDXjE6rSSTs'],
+        })
+      } catch (e) {}
     },
     handleCloseSetLastTime() {
       this.triggerEvent('updateTime', {

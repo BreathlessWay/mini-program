@@ -10,7 +10,6 @@ const user = async (cloud, event) => {
     OPENID
   } = cloud.getWXContext(),
     db = cloud.database(),
-    _ = db.command,
     userMapDb = db.collection(userMapDbName),
     userResult = await userMapDb
     .where({
@@ -27,7 +26,8 @@ const user = async (cloud, event) => {
     language: "zh_CN",
     province: "",
     lastHeSuanTime: null,
-    expiration: 72
+    expiration: 72,
+    shouldNotice: false
   };
   // 第一次验证是否登陆过
   if (!userInfo && !event.user) {
