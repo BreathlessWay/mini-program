@@ -1,4 +1,5 @@
 import lget from "lodash.get";
+import dayjs from 'dayjs'
 
 import Toast from '@vant/weapp/toast/toast';
 
@@ -16,6 +17,7 @@ Page({
     soulSoupData: null,
     oneData: null,
     userInfo: null,
+    expireDate: null,
     register: false,
     time: null,
     timeData: {},
@@ -40,14 +42,17 @@ Page({
         lastHeSuanTime,
         expiration
       } = app.globalData.userInfo
-      let time = 0
+      let time = 0,
+        expireDate = null;
       if (lastHeSuanTime && expiration) {
-        time = lastHeSuanTime + expiration * 60 * 60 * 1000 - Date.now()
-        time = time < 0 ? 0 : time
+        time = lastHeSuanTime + expiration * 60 * 60 * 1000 - Date.now();
+        time = time < 0 ? 0 : time;
+        expireDate = dayjs(lastHeSuanTime).add(expiration, 'hours').valueOf();
       }
       this.setData({
         userInfo: app.globalData.userInfo,
-        time
+        time,
+        expireDate
       });
       // await this.getSoulSoup()
     }
@@ -107,14 +112,17 @@ Page({
       lastHeSuanTime,
       expiration
     } = userInfo
-    let time = 0
+    let time = 0,
+      expireDate = null;
     if (lastHeSuanTime && expiration) {
-      time = lastHeSuanTime + expiration * 60 * 60 * 1000 - Date.now()
-      time = time < 0 ? 0 : time
+      time = lastHeSuanTime + expiration * 60 * 60 * 1000 - Date.now();
+      time = time < 0 ? 0 : time;
+      expireDate = dayjs(lastHeSuanTime).add(expiration, 'hours').valueOf();
     }
     this.setData({
       userInfo,
-      time
+      time,
+      expireDate
     });
     const {
       soup,

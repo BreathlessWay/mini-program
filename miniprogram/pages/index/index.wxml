@@ -5,6 +5,7 @@
   <van-cell-group inset border="{{ false }}">
     <van-cell title="最近一次核酸时间" value="{{ utils.formartTime(userInfo.lastHeSuanTime) || '尚未设置' }}" border="{{ false }}" label="为核酸采集时间" center size="large" bind:click="handleSetLastTime" is-link/>
     <van-cell title="核酸结果有效时间" value="{{ userInfo.expiration ? userInfo.expiration + ' 小时' : '' }}" border="{{ false }}" size="large" bind:click="handleSetExpireTime" is-link/>
+    <van-cell title="核酸结果过期时间" value="{{ utils.formartTime(expireDate) || '尚未设置采样时间' }}" border="{{ false }}" size="large" bind:click="handleSetExpireTime"/>
   </van-cell-group>
   <view class="time-count" wx:if="{{ userInfo.lastHeSuanTime }}">
     <block wx:if="{{ time }}">

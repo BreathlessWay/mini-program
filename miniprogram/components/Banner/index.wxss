@@ -41,5 +41,6 @@
 .banner-avatar {
   border-radius: 50%;
   width: 40rpx;
+  height: 40rpx;
   margin-right: 4rpx;
 }
