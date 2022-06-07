@@ -24,8 +24,6 @@ exports.main = async () => {
       })
       .get();
 
-    console.log(userResult)
-
     if (userResult.data.length) {
       const userIds = []
       userResult.data.forEach(item => {
@@ -36,11 +34,13 @@ exports.main = async () => {
         } = item
         if (lastHeSuanTime && expiration) {
           const lastTime = dayjs(lastHeSuanTime).add(expiration, 'hour'),
-            between = (dayjs().valueOf() - lastTime.valueOf()) < time;
+            lastTimestape = lastTime.valueOf(),
+            nowTimeStape = dayjs().valueOf(),
+            between = lastTimestape < nowTimeStape || ((lastTimestape - nowTimeStape) < time);
 
           if (between) {
             userIds.push(user_id)
-            subscribre(user_id, cloud, lastTime.format('MM月DD日 HH时'))
+            subscribre(user_id, cloud, lastTime.format('YYYY年MM月DD日'))
           };
         }
       })
