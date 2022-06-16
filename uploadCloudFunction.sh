@@ -1,0 +1,1 @@
+"/Applications/wechatwebdevtools.app/Contents/MacOS/cli" cloud functions deploy --e hesuan-7gcz6lny50c2c921 --n quickstartFunctions --r --project "/Users/breathlessway/Desktop/mini-shop" --report_first --report

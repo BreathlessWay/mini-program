@@ -1,0 +1,5 @@
+<!--pages/index/index.wxml-->
+<view wx:if="{{ mode }}">
+  <text>pages/index/index.wxml1{{ mode }}</text>
+</view>
+<shop-initial wx:else/>
