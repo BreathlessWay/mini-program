@@ -1,13 +1,19 @@
 <!--pages/index/index.wxml-->
 <view wx:if="{{ shop_mode }}">
-  <view class="home-user van-hairline--bottom" wx:if="{{ !userInfo }}" bind:tap="login">
-    <van-icon name="user-circle-o" size="18px" color="#07c160"/>
-    <text class="home-user_login">未登录</text>
-  </view>
-  <view wx:else>
-    <text>{{ userInfo.nickName }}</text>
+  <view class="van-hairline--bottom">
+    <view wx:if="{{ !userInfo }}" class="home-user_login" bind:tap="login">
+      <van-icon name="user-circle-o" size="18px" color="#07c160" />
+      <text class="home-user_login__btn">未登录</text>
+    </view>
+    <view wx:else class="home-user_info">
+      <navigator class="home-user_info__name" url="/pages/user/index" hover-class="none">
+        <image class="home-user_info__avatar" mode="aspectFit" src="{{ userInfo.avatarUrl }}"></image>
+        <text>{{ userInfo.nickName }}</text>
+      </navigator>
+      <text class="home-user_info__btn" bind:tap="logout">退出</text>
+    </view>
   </view>
 </view>
-<shop-initial wx:else shop-initial-fail="{{ shop_initial_fail }}"/>
-<shop-register wx:if="{{ register }}" bind:register="handleRegister" bind:close="handleCloseRegister"/>
-<van-toast id="van-toast"/>
+<shop-initial wx:else shop-initial-fail="{{ shop_initial_fail }}" />
+<shop-register wx:if="{{ register }}" bind:register="handleRegister" bind:close="handleCloseRegister" />
+<van-toast id="van-toast" />

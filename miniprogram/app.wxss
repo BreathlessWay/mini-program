@@ -5,3 +5,5 @@ page {
     Segoe UI, Arial, Roboto, 'PingFang SC', 'miui', 'Hiragino Sans GB', 'Microsoft Yahei',
     sans-serif;
 }
+
+@import 'app-wxa-auto-dark.wxss'

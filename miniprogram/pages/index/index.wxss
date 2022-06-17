@@ -1,11 +1,39 @@
-.home-user {
+.home-user_login {
   display: flex;
   align-items: center;
   padding: 20rpx;
   font-size: 26rpx;
 }
 
-.home-user_login {
+.home-user_login__btn {
   margin-left: 10rpx;
   color: #07c160
 }
+
+.home-user_info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx;
+  font-size: 26rpx;
+  color: #ff976a
+}
+
+.home-user_info__name{
+  display: flex;
+  align-items: center;
+}
+
+.home-user_info__avatar{
+  margin-right: 10rpx;
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 20rpx;
+  border: 1rpx solid #eee;
+}
+
+.home-user_info__btn {
+  color: #1989fa
+}
+
+@import 'index-wxa-auto-dark.wxss'

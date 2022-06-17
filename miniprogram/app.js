@@ -8,7 +8,8 @@ import { USER_INFO_KEY } from './constants';
 import Toast from '@vant/weapp/toast/toast';
 
 Toast.setDefaultOptions({
-	zIndex: 9999
+  zIndex: 9999,
+  forbidClick: true
 });
 
 App({
