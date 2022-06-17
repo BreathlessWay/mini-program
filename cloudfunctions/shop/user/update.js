@@ -1,7 +1,7 @@
-const tryCatchWrap = require("../utils/tryCatchWrap"),
-	{ userDbName, successStatus } = require("../constants");
+const tryCatchWrap = require('../utils/tryCatchWrap'),
+	{ userDbName, successStatus } = require('../constants');
 
-const user = async (cloud, event) => {
+const update = async (cloud, event) => {
 	const { OPENID } = cloud.getWXContext(),
 		db = cloud.database(),
 		userMapDb = db.collection(userDbName);
@@ -15,10 +15,10 @@ const user = async (cloud, event) => {
 	});
 
 	return {
-		errMsg: "",
+		errMsg: '',
 		status: successStatus,
 		data: null
 	};
 };
 
-module.exports = tryCatchWrap(user, "用户信息更新失败");
+module.exports = tryCatchWrap(update, '用户信息更新失败');

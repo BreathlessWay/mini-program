@@ -5,7 +5,8 @@ Component({
 	 */
 	properties: {
 		shopInitialFail: {
-			type: Boolean
+      type: Boolean,
+      value: false
 		}
 	},
 

@@ -12,6 +12,7 @@ Component({
 	 */
 	data: {
 		canIUseGetUserProfile: false,
+		getPhone: false
 	},
 	attached() {
 		if (wx.getUserProfile) {
@@ -25,7 +26,7 @@ Component({
 	 */
 	methods: {
 		async getUserInfo(e) {
-			await this.handleRegister(e.detail.userInfo);
+			await this.handleGetUserInfo(e.detail.userInfo);
 		},
 		async getUserProfile() {
 			try {
@@ -35,12 +36,19 @@ Component({
 				const res = await wx.getUserProfile({
 					desc: '用于完善用户资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
 				});
-				await this.handleRegister(res.userInfo);
+				await this.handleGetUserInfo(res.userInfo);
 			} catch (error) {
 				Toast.fail('获取用户信息失败');
 			}
 		},
+		async handleGetUserInfo(userInfo) {
+			this.setData({
+				getPhone: true
+			});
+			this._userInfo = userInfo;
+		},
 		async handleRegister(userInfo) {
+			let user = null;
 			Toast.loading({
 				message: '注册中...',
 				forbidClick: true,
@@ -51,15 +59,44 @@ Component({
 					name: 'shop',
 					data: {
 						name: 'user',
-						type: 'post',
+						type: 'register',
 						params: userInfo
 					},
 				});
-				this.triggerEvent('register', lget(userResult, 'result.data'));
+				this.setData({
+					getPhone: false
+				});
+				user = lget(userResult, 'result.data');
 			} catch (e) {
 				Toast.fail('用户注册失败');
 			} finally {
+				this.triggerEvent('register', user);
 				Toast.clear();
+			}
+		},
+		async getPhoneNumber(e) {
+			const userInfo = this._userInfo;
+			try {
+				const phoneResult = await wx.cloud.callFunction({
+					name: 'shop',
+					data: {
+						name: 'user',
+						type: 'phone',
+						params: {
+							cloudId: e.detail.cloudID
+						}
+					},
+				});
+				const phoneInfo = lget(phoneResult, 'result.data');
+				if (phoneInfo) {
+					const { countryCode, phoneNumber, purePhoneNumber } = phoneInfo;
+					userInfo.countryCode = countryCode;
+					userInfo.phoneNumber = phoneNumber;
+					userInfo.purePhoneNumber = purePhoneNumber;
+				}
+				await this.handleRegister(userInfo);
+			} catch (e) {
+				Toast.fail('获取用户手机号失败');
 			}
 		},
 		handleClose() {

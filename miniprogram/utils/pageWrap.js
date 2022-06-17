@@ -16,13 +16,12 @@ Page = function (options) {
 				name: 'shop',
 				data: {
 					name: 'setting',
-					type: 'get',
 					params: {
 						appid: accountInfo.miniProgram.appId
 					}
 				},
 			});
-			const mode = lget(setting, 'result.data.mode');
+      const mode = lget(setting, 'result.data.mode');
 			if (mode) {
 				this.setData({
 					shop_mode: mode

@@ -3,5 +3,5 @@
 .login {
   display: flex;
   justify-content: center;
-  padding: 100rpx 0;
+  padding: 50rpx 50rpx 100rpx;
 }

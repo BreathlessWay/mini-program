@@ -27,7 +27,7 @@ export default Behavior({
 					name: 'shop',
 					data: {
 						name: 'user',
-						type: 'get'
+						type: 'login'
 					},
 				});
 				const userDetail = lget(userInfo, 'result.data');
