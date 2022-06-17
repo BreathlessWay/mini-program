@@ -3,7 +3,8 @@ import lget from 'lodash.get';
 const _page = Page;
 
 Page = function (options) {
-	options.data.shop_mode = null;
+	// options.data.shop_mode = null;
+	options.data.shop_mode = 1;
 	options.data.shop_initial_fail = false;
 	options.data.userInfo = null;
 
@@ -11,24 +12,24 @@ Page = function (options) {
 
 	const onLoad = async function () {
 		try {
-			const accountInfo = wx.getAccountInfoSync();
-			const setting = await wx.cloud.callFunction({
-				name: 'shop',
-				data: {
-					name: 'setting',
-					params: {
-						appid: accountInfo.miniProgram.appId
-					}
-				},
-			});
-      const mode = lget(setting, 'result.data.mode');
-			if (mode) {
-				this.setData({
-					shop_mode: mode
-				});
-			} else {
-				throw new Error('尚未设置店铺模式');
-			}
+			// const accountInfo = wx.getAccountInfoSync();
+			// const setting = await wx.cloud.callFunction({
+			// 	name: 'shop',
+			// 	data: {
+			// 		name: 'setting',
+			// 		params: {
+			// 			appid: accountInfo.miniProgram.appId
+			// 		}
+			// 	},
+			// });
+			// const mode = lget(setting, 'result.data.mode');
+			// if (mode) {
+			// 	this.setData({
+			// 		shop_mode: mode
+			// 	});
+			// } else {
+			// 	throw new Error('尚未设置店铺模式');
+			// }
 			_onLoad && _onLoad.apply(this, arguments);
 		} catch (error) {
 			this.setData({

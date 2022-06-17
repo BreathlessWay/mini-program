@@ -14,17 +14,17 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20rpx;
+  padding: 17rpx 20rpx;
   font-size: 26rpx;
   color: #ff976a
 }
 
-.home-user_info__name{
+.home-user_info__name {
   display: flex;
   align-items: center;
 }
 
-.home-user_info__avatar{
+.home-user_info__avatar {
   margin-right: 10rpx;
   width: 40rpx;
   height: 40rpx;
@@ -34,6 +34,14 @@
 
 .home-user_info__btn {
   color: #1989fa
+}
+
+.home-swiper {
+  height: 400rpx;
+}
+
+.home-swiper_item {
+  width: 100%;
 }
 
 @import 'index-wxa-auto-dark.wxss'
