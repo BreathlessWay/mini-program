@@ -1,0 +1,7 @@
+@import '../../miniprogram_npm/@vant/weapp/button/index.wxss';
+
+.login {
+  display: flex;
+  justify-content: center;
+  padding: 100rpx 0;
+}

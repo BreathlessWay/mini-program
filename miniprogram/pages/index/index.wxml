@@ -1,16 +1,17 @@
 <!--pages/index/index.wxml-->
 <view wx:if="{{ mode }}">
-    <block wx:if="{{ !userInfo }}">
-        <button wx:if="{{ canIUseGetUserProfile }}" bindtap="getUserProfile">
-            注册新用户
-        </button>
-        <button wx:else open-type="getUserInfo" bindgetuserinfo="getUserInfo">
-            注册新用户
-        </button>
-    </block>
+    <view class="home-user" wx:if="{{ !userInfo }}">
+
+        <view>
+            <van-icon name="user-circle-o"/>
+            <text>未登录</text>
+        </view>
+        <view bind:tap="login">[ 登录 ]</view>
+    </view>
     <view wx:else>
-        {{ userInfo.nickName }}
+        <text>{{ userInfo.nickName }}</text>
     </view>
 </view>
 <shop-initial wx:else/>
+<shop-register wx:if="{{ register }}" bind:register="setUserInfo"/>
 <van-toast id="van-toast"/>

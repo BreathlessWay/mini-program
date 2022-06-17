@@ -11,6 +11,7 @@
   },
   "usingComponents": {
     "shop-initial": "components/Initial/index",
+    "shop-register": "components/Register/index",
     "van-button": "@vant/weapp/button/index",
     "van-toast": "@vant/weapp/toast/index",
     "van-dialog": "@vant/weapp/dialog/index",

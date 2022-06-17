@@ -1,6 +1,6 @@
-const lget = require("lodash").get,
-	tryCatchWrap = require("../utils/tryCatchWrap"),
-	{ userDbName, successStatus } = require("../constants");
+const lget = require('lodash').get,
+	tryCatchWrap = require('../utils/tryCatchWrap'),
+	{ userDbName, successStatus } = require('../constants');
 
 const user = async (cloud) => {
 	const { OPENID } = cloud.getWXContext(),
@@ -11,13 +11,13 @@ const user = async (cloud) => {
 				user_id: OPENID,
 			})
 			.get(),
-		userInfo = lget(userResult, "data.0");
-
+		userInfo = lget(userResult, 'data.0');
+	console.log(userResult);
 	return {
-		errMsg: "",
+		errMsg: '',
 		status: successStatus,
 		data: userInfo,
 	};
 };
 
-module.exports = tryCatchWrap(user, "用户信息获取失败");
+module.exports = tryCatchWrap(user, '用户信息获取失败');
