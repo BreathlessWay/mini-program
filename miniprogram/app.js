@@ -1,11 +1,9 @@
 // app.js
 import './utils/sdk';
 
-import {
-	USER_INFO_KEY
-} from './constants';
-
 import './utils/pageWrap';
+
+import { USER_INFO_KEY } from './constants';
 
 import Toast from '@vant/weapp/toast/toast';
 
