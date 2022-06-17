@@ -14,6 +14,8 @@
     "shop-register": "components/Register/index",
     "van-button": "@vant/weapp/button/index",
     "van-toast": "@vant/weapp/toast/index",
+    "van-loading": "@vant/weapp/loading/index",
+    "van-empty": "@vant/weapp/empty/index",
     "van-dialog": "@vant/weapp/dialog/index",
     "van-icon": "@vant/weapp/icon/index",
     "van-dropdown-menu": "@vant/weapp/dropdown-menu/index",

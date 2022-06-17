@@ -1,7 +1,7 @@
 const tryCatchWrap = require("../utils/tryCatchWrap"),
 	{ userDbName, successStatus } = require("../constants");
 
-const user = async (cloud, event) => {
+const user = async (cloud, userInfo) => {
 	const { OPENID } = cloud.getWXContext(),
 		db = cloud.database(),
 		userMapDb = db.collection(userDbName),
@@ -15,11 +15,10 @@ const user = async (cloud, event) => {
 			province: "",
 		};
 
-
 	// event.userInfo 尽然在服务器上有值 fuck
 	for (let p in data) {
-		if (event.user.hasOwnProperty(p)) {
-			data[p] = event.user[p];
+		if (userInfo.hasOwnProperty(p)) {
+			data[p] = userInfo[p];
 		}
 	}
 	const res = await userMapDb.add({

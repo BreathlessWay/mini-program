@@ -4,4 +4,6 @@ exports.successStatus = 0;
 
 exports.otherStatus = 600;
 
+exports.settingDbName = "shop_setting_map";
+
 exports.userDbName = "shop_user_map";

@@ -1,17 +1,13 @@
 <!--pages/index/index.wxml-->
-<view wx:if="{{ mode }}">
-    <view class="home-user" wx:if="{{ !userInfo }}">
-
-        <view>
-            <van-icon name="user-circle-o"/>
-            <text>未登录</text>
-        </view>
-        <view bind:tap="login">[ 登录 ]</view>
-    </view>
-    <view wx:else>
-        <text>{{ userInfo.nickName }}</text>
-    </view>
+<view wx:if="{{ shop_mode }}">
+  <view class="home-user van-hairline--bottom" wx:if="{{ !userInfo }}" bind:tap="login">
+    <van-icon name="user-circle-o" size="18px" color="#ff976a"/>
+    <text class="home-user_login">未登录</text>
+  </view>
+  <view wx:else>
+    <text>{{ userInfo.nickName }}</text>
+  </view>
 </view>
-<shop-initial wx:else/>
-<shop-register wx:if="{{ register }}" bind:register="setUserInfo"/>
-<van-toast id="van-toast"/>
+<shop-initial wx:else shop-initial-fail="{{ shop_initial_fail }}"/>
+<shop-register wx:if="{{ register }}" bind:register="handleRegister" bind:close="handleCloseRegister"/>
+<van-toast id="van-toast" />

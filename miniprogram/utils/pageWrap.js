@@ -1,36 +1,55 @@
+import lget from 'lodash.get';
+
 const _page = Page;
 
 Page = function (options) {
-  options.data.mode = null
-  options.data.userInfo = null
+	options.data.shop_mode = null;
+	options.data.shop_initial_fail = false;
+	options.data.userInfo = null;
 
-  const _onLoad = options.onLoad;
+	const _onLoad = options.onLoad;
 
-  const onLoad = async function () {
-    const accountInfo = wx.getAccountInfoSync()
-    const mode = await new Promise(resolve => {
-      setTimeout(() => {
-        resolve(accountInfo.miniProgram.appId)
-      }, 0)
-    })
-    this.setData({
-      mode
-    })
-    _onLoad && _onLoad.apply(this, arguments);
-  }
+	const onLoad = async function () {
+		try {
+			const accountInfo = wx.getAccountInfoSync();
+			const setting = await wx.cloud.callFunction({
+				name: 'shop',
+				data: {
+					name: 'setting',
+					type: 'get',
+					params: {
+						appid: accountInfo.miniProgram.appId
+					}
+				},
+			});
+			const mode = lget(setting, 'result.data.mode');
+			if (mode) {
+				this.setData({
+					shop_mode: mode
+				});
+			} else {
+				throw new Error('尚未设置店铺模式');
+			}
+			_onLoad && _onLoad.apply(this, arguments);
+		} catch (error) {
+			this.setData({
+				shop_initial_fail: true
+			});
+		}
+	};
 
-  options.onLoad = onLoad
+	options.onLoad = onLoad;
 
-  const _onShow = options.onShow
+	const _onShow = options.onShow;
 
-  const onShow = function () {
-    this.setData({
-      userInfo: getApp().globalData.userInfo
-    })
-    _onShow && _onShow.apply(this, arguments);
-  }
+	const onShow = function () {
+		this.setData({
+			userInfo: getApp().globalData.userInfo
+		});
+		_onShow && _onShow.apply(this, arguments);
+	};
 
-  options.onShow = onShow
+	options.onShow = onShow;
 
-  return _page(options)
-}
+	return _page(options);
+};

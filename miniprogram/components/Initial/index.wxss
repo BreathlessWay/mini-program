@@ -1,3 +1,13 @@
-.initial-template {
-  color: red
+.shop-initial {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shop-initial_tips {
+  margin-top: 20px;
+  font-size: 32rpx;
+  color: #ff976a;
 }

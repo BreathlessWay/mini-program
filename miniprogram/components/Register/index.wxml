@@ -1,10 +1,15 @@
-<view class="login">
-  <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile" class="van-button van-button--info van-button--normal" hover-class="van-button--active hover-class">
-    <van-icon size="1.2em" name="manager-o" class="van-button__icon" custom-style="line-height: inherit;" />
-    <view class="van-button__text">注册新用户</view>
-  </button>
-  <button wx:else open-type="getUserInfo" bindgetuserinfo="getUserInfo" class="van-button van-button--info van-button--normal" hover-class="van-button--active hover-class">
-    <van-icon size="1.2em" name="manager-o" class="van-button__icon" custom-style="line-height: inherit;" />
-    <view class="van-button__text">注册新用户</view>
-  </button>
-</view>
+<van-dialog use-slot title="注册" show="{{ true }}" showConfirmButton="{{ false }}" closeOnClickOverlay="{{ true }}"
+            bind:close="handleClose">
+    <view class="login">
+        <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile"
+                class="van-button van-button--info van-button--normal" hover-class="van-button--active hover-class">
+            <van-icon size="1.2em" name="manager-o" class="van-button__icon" custom-style="line-height: inherit;"/>
+            <view class="van-button__text">注册新用户</view>
+        </button>
+        <button wx:else open-type="getUserInfo" bindgetuserinfo="getUserInfo"
+                class="van-button van-button--info van-button--normal" hover-class="van-button--active hover-class">
+            <van-icon size="1.2em" name="manager-o" class="van-button__icon" custom-style="line-height: inherit;"/>
+            <view class="van-button__text">注册新用户</view>
+        </button>
+    </view>
+</van-dialog>

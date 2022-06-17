@@ -1,9 +1,10 @@
 // 云函数入口文件
-process.env.TZ = "Asia/Shanghai";
+process.env.TZ = 'Asia/Shanghai';
 
-const cloud = require("wx-server-sdk"),
-	user = require("./user/index"),
-	{ env } = require("./constants");
+const cloud = require('wx-server-sdk'),
+	user = require('./user/index'),
+	setting = require('./setting/index'),
+	{ env } = require('./constants');
 
 cloud.init({
 	env
@@ -21,8 +22,10 @@ exports.main = async (event, context) => {
 	try {
 		const { name, ...rest } = event;
 		switch (name) {
-			case "user":
+			case 'user':
 				return await user(cloud, rest, context);
+			case 'setting':
+				return await setting(cloud, rest, context);
 		}
 	} catch (error) {
 		throw error.errMsg || error.message;

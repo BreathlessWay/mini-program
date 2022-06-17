@@ -1,1 +1,8 @@
-<text class="initial-template">店铺初始化中</text>
+<view class="shop-initial">
+  <van-empty image="error" description="店铺初始化失败" wx:if="{{ shopInitialFail }}" />
+  <van-loading size="44px" vertical color="#ff976a" wx:else>
+    <view class="shop-initial_tips">
+      <text>店铺初始化中...</text>
+    </view>
+  </van-loading>
+</view>

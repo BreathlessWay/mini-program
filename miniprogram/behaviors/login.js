@@ -51,6 +51,14 @@ export default Behavior({
 			});
 			setUserInfo(userInfo);
 		},
+		handleRegister(e) {
+			this.setUserInfo(e.detail);
+		},
+		handleCloseRegister() {
+			this.setData({
+				register: false,
+			});
+		},
 		logout() {
 			this.setData({
 				userInfo: null
