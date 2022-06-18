@@ -3,6 +3,8 @@ const cloud = require('wx-server-sdk'),
   dayjs = require("dayjs"),
   subscribre = require('./subscribe')
 
+process.env.TZ = "Asia/Shanghai";
+
 cloud.init()
 
 const time = 24 * 60 * 60 * 1000;
