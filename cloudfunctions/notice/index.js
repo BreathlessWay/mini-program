@@ -1,6 +1,5 @@
 // 云函数入口文件
 const cloud = require('wx-server-sdk'),
-  lget = require("lodash").get,
   dayjs = require("dayjs"),
   subscribre = require('./subscribe')
 
@@ -10,6 +9,7 @@ const time = 24 * 60 * 60 * 1000;
 
 // 云函数入口函数
 exports.main = async () => {
+  const log = cloud.logger();
   try {
     const db = cloud.database(),
       _ = db.command,
@@ -44,16 +44,21 @@ exports.main = async () => {
           };
         }
       })
-
+      const now = dayjs().format('YYYY-MM-DD HH:mm');
       await userMapDb.where({
         user_id: _.in(userIds)
       }).update({
         data: {
-          shouldNotice: false
+          shouldNotice: false,
+          lastNoticeTime: now
         },
       });
     }
   } catch (err) {
-    console.log(err)
+    console.log(err);
+    log.error({
+      name: `更新订阅状态失败`,
+      error: err
+    });
   }
 }

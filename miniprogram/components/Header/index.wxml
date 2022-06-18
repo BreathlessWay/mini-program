@@ -1,14 +1,3 @@
-<!-- <van-dropdown-menu active-color="#1989fa" dropdown-style="padding-top:{{statusBarHeight}}px">
-  <van-dropdown-item id="item" title="核酸提醒小助手">
-    <view class="setting-item ~van-hairline--bottom" data-setting="0" bindtap="handleSelectSetting">
-      <text>设置最近一次核酸时间</text>
-    </view>
-    <view class="setting-item" data-setting="1" bindtap="handleSelectSetting">
-      <text>设置核酸有效时间</text>
-    </view>
-  </van-dropdown-item>
-</van-dropdown-menu> -->
-
 <van-dialog use-slot title="核酸有效时间" show="{{ showExpireTime }}" show-cancel-button bind:close="handleCloseDialog" bind:confirm="handleConfirmDialog" confirm-button-color="#1989fa" close-on-click-overlay before-close="{{ beforeClose }}">
   <view class="dialog-input">
     <van-field model:value="{{ expirationInputValue }}" placeholder="请输入核酸有效时间" error="{{ expirationError }}" error-message="{{ expirationErrorMsg }}" error-message-align="center" input-align="center" clearable type="number" size="large" left-icon="underway-o" />

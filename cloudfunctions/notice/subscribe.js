@@ -23,7 +23,7 @@ const subscribre = async (OPENID, cloud, date) => {
   } catch (error) {
     console.log(error);
     log.error({
-      name: `订阅消息推送失败`,
+      name: `订阅消息推送失败-${OPENID}`,
       error
     });
   }
