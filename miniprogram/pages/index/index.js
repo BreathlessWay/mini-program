@@ -7,7 +7,7 @@ Page({
 	 */
 	data: {
 		desk: null,
-		background: ['red', 'yellow', 'green'],
+		banner: ['red', 'yellow', 'green'],
 	},
 
 	/**

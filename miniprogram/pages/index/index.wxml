@@ -14,12 +14,13 @@
     </view>
   </view>
   <swiper indicator-dots autoplay circular class="home-swiper">
-    <block wx:for="{{background}}" wx:key="*this">
+    <block wx:for="{{banner}}" wx:key="*this">
       <swiper-item>
         <image class="home-swiper_item" mode="aspectFill" src="{{ userInfo.avatarUrl }}" />
       </swiper-item>
     </block>
   </swiper>
+  <shop-discount />
 </view>
 <shop-initial wx:else shop-initial-fail="{{ shop_initial_fail }}" />
 <shop-register wx:if="{{ register }}" bind:register="handleRegister" bind:close="handleCloseRegister" />
