@@ -6,15 +6,26 @@ const lget = require('lodash').get,
 const popup = async (cloud, userId) => {
 	const db = cloud.database(),
 		_ = db.command,
-		discountMapDb = db.collection(discountDbName),
-		query = {
-			popup: true,
-			type: _.in([DiscountType.diQuan, DiscountType.jianQuan, DiscountType.zheQuan]),
-			use: true
-		};
+		$ = _.aggregate,
+		discountMapDb = db.collection(discountDbName);
+
+	let query = {
+		popup: true,
+		type: _.in([DiscountType.diQuan, DiscountType.jianQuan, DiscountType.zheQuan]),
+		use: true
+	};
 
 	if (userId) {
-		query.user = _.in([userId]);
+		query = _.expr($.and([
+			$.eq(['$popup', true]),
+			$.eq(['$use', true]),
+			$.in(['$type', [DiscountType.diQuan, DiscountType.jianQuan, DiscountType.zheQuan]]),
+			$.or([
+				$.ifNull(['$user', []]),
+				$.in([userId, '$user']),
+				$.eq([$.size('$user'), 0])
+			])
+		]));
 	}
 
 	const discountResult = await discountMapDb
