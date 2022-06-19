@@ -1,2 +1,6 @@
 <!--components/Banner/index.wxml-->
-<text>components/Discount/index.wxml</text>
+<view wx:for="{{ discountList }}" wx:key="_id">
+  <text wx:if="{{ item.man }}">满{{ item.man }}</text>
+  <text wx:if="{{ item.jian }}">减{{ item.jian }}</text>
+  <text wx:if="{{ item.zhe }}">折{{ item.zhe }}</text>
+</view>

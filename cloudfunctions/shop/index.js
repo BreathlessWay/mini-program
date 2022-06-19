@@ -6,7 +6,6 @@ const cloud = require('wx-server-sdk'),
 	setting = require('./setting/index'),
 	home = require('./home/index'),
 	discount = require('./discount/index'),
-
 	{ env } = require('./constants');
 
 cloud.init({

@@ -6,11 +6,7 @@ const setting = async (cloud, event) => {
 	const { params } = event,
 		db = cloud.database(),
 		settingMapDb = db.collection(settingDbName),
-		settingResult = await settingMapDb
-			.where({
-				appid: params.appid,
-			})
-			.get(),
+		settingResult = await settingMapDb.get(),
 		setting = lget(settingResult, 'data.0');
 
 	return {

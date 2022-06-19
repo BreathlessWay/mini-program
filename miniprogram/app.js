@@ -8,8 +8,8 @@ import { USER_INFO_KEY } from './constants';
 import Toast from '@vant/weapp/toast/toast';
 
 Toast.setDefaultOptions({
-  zIndex: 9999,
-  forbidClick: true
+	zIndex: 9999,
+	forbidClick: true
 });
 
 App({
@@ -35,6 +35,11 @@ App({
 	},
 	globalData: {
 		userInfo: null,
-		scene: 0
+		scene: 0,
+		shop_setting: {
+			mode: 1,
+			showComment: true,
+			minPrice: 0
+		}
 	}
 });

@@ -10,8 +10,8 @@ Page({
 	data: {
 		desk: null,
 		banner: [],
-		showComment: false,
 		discountList: [],
+		active: 0,
 	},
 
 	/**
@@ -37,8 +37,12 @@ Page({
 	/**
 	 * 页面相关事件处理函数--监听用户下拉动作
 	 */
-	onPullDownRefresh() {
-
+	async onPullDownRefresh() {
+		try {
+			await Promise.all([this.getHomeInfo(), this.getDiscount()]);
+		} finally {
+			wx.stopPullDownRefresh();
+		}
 	},
 
 	/**
@@ -67,8 +71,7 @@ Page({
 				},
 			});
 			this.setData({
-				banner: lget(home, 'result.data.banner'),
-				showComment: lget(home, 'result.data.showComment'),
+				banner: lget(home, 'result.data.banner')
 			});
 		} catch (e) {
 			console.log(e);
@@ -90,5 +93,10 @@ Page({
 		} catch (e) {
 			console.log(e);
 		}
+	},
+	handleTabChange(e) {
+		this.setData({
+			active: e.detail.index
+		});
 	}
 });

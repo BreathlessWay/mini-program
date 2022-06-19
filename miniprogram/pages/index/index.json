@@ -1,5 +1,6 @@
 {
   "usingComponents": {
     "shop-discount": "../../components/Discount/index"
-  }
+  },
+  "enablePullDownRefresh": true
 }

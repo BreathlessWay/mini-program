@@ -3,35 +3,40 @@ import lget from 'lodash.get';
 const _page = Page;
 
 Page = function (options) {
-	// options.data.shop_mode = null;
-	options.data.shop_mode = 1;
+	options.data.shop_setting = null;
 	options.data.shop_initial_fail = false;
 	options.data.userInfo = null;
 
 	const _onLoad = options.onLoad;
 
 	const onLoad = async function () {
+		const shop_setting = getApp().globalData.shop_setting;
+		if (shop_setting) {
+			this.setData({
+				shop_setting
+			});
+			return;
+		}
 		try {
-			// const accountInfo = wx.getAccountInfoSync();
-			// const setting = await wx.cloud.callFunction({
-			// 	name: 'shop',
-			// 	data: {
-			// 		name: 'setting',
-			// 		params: {
-			// 			appid: accountInfo.miniProgram.appId
-			// 		}
-			// 	},
-			// });
-			// const mode = lget(setting, 'result.data.mode');
-			// if (mode) {
-			// 	this.setData({
-			// 		shop_mode: mode
-			// 	});
-			// } else {
-			// 	throw new Error('尚未设置店铺模式');
-			// }
+			const settingResult = await wx.cloud.callFunction({
+				name: 'shop',
+				data: {
+					name: 'setting'
+				},
+			});
+			const setting = lget(settingResult, 'result.data');
+			if (setting) {
+				const { _id, ...rest } = setting;
+				this.setData({
+					shop_setting: rest
+				});
+				getApp().globalData.shop_setting = rest;
+			} else {
+				throw new Error('尚未设置店铺模式');
+			}
 			_onLoad && _onLoad.apply(this, arguments);
 		} catch (error) {
+			console.log(error);
 			this.setData({
 				shop_initial_fail: true
 			});

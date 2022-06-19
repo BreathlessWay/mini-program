@@ -37,7 +37,7 @@
 }
 
 .home-swiper {
-  height: 400rpx;
+  height: 300rpx;
 }
 
 .home-swiper_item {
