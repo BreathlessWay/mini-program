@@ -1,7 +1,8 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/user/index"
+    "pages/user/index",
+    "pages/product/index"
   ],
   "window": {
     "backgroundColor": "#fff",
@@ -13,6 +14,7 @@
   "usingComponents": {
     "shop-initial": "components/Initial/index",
     "shop-register": "components/Register/index",
+    "shop-popup-discount": "components/PopupDiscount/index",
     "van-button": "@vant/weapp/button/index",
     "van-toast": "@vant/weapp/toast/index",
     "van-loading": "@vant/weapp/loading/index",

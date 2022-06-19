@@ -1,3 +1,5 @@
+import lget from 'lodash.get';
+
 import login from '../../behaviors/login';
 
 Page({
@@ -7,7 +9,8 @@ Page({
 	 */
 	data: {
 		desk: null,
-		banner: ['red', 'yellow', 'green'],
+		banner: [],
+		showComment: false
 	},
 
 	/**
@@ -26,6 +29,7 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow() {
+		this.getHomeInfo();
 	},
 
 	/**
@@ -44,5 +48,22 @@ Page({
 			path: '/page/index/index',
 			imageUrl: ''
 		};
+	},
+	async getHomeInfo() {
+		try {
+			const home = await wx.cloud.callFunction({
+				name: 'shop',
+				data: {
+					name: 'home'
+				},
+			});
+			this.setData({
+				banner: lget(home, 'result.data.banner'),
+				showComment: lget(home, 'result.data.showComment'),
+			});
+			console.log(home);
+		} catch (e) {
+			console.log(e);
+		}
 	}
 });

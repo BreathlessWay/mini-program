@@ -7,7 +7,7 @@ const tryCatchWrap = require('../utils/tryCatchWrap'),
  * @param {object} cloud - wx.cloud
  * @param {object} event - 触发云函数的事件.
  * @param {string} event.type - 请求具体操作
- * @param {object} event.params - 请求参数
+ * @param {object} [event.params] - 请求参数
  */
 const user = async (cloud, event) => {
 	const { type, params } = event;

@@ -16,7 +16,10 @@
   <swiper indicator-dots autoplay circular class="home-swiper">
     <block wx:for="{{banner}}" wx:key="*this">
       <swiper-item>
-        <image class="home-swiper_item" mode="aspectFill" src="{{ userInfo.avatarUrl }}" />
+        <navigator url="/pages/product/index?id={{ item.id }}" hover-class="none" wx:if="{{ item.id }}">
+          <image class="home-swiper_item" mode="aspectFill" src="{{ item.img }}" />
+        </navigator>
+        <image class="home-swiper_item" mode="aspectFill" src="{{ item.img }}" wx:else/>
       </swiper-item>
     </block>
   </swiper>
@@ -24,4 +27,5 @@
 </view>
 <shop-initial wx:else shop-initial-fail="{{ shop_initial_fail }}" />
 <shop-register wx:if="{{ register }}" bind:register="handleRegister" bind:close="handleCloseRegister" />
+<shop-popup-discount />
 <van-toast id="van-toast" />
