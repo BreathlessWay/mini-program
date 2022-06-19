@@ -8,4 +8,6 @@ exports.settingDbName = 'shop_setting_map';
 
 exports.homeDbName = 'shop_home_map';
 
+exports.discountDbName = 'shop_discount_map';
+
 exports.userDbName = 'shop_user_map';

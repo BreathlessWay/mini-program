@@ -50,6 +50,7 @@ export default Behavior({
 				register: false,
 			});
 			setUserInfo(userInfo);
+			this.loginHook && this.loginHook();
 		},
 		handleRegister(e) {
 			this.setUserInfo(e.detail);

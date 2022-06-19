@@ -49,6 +49,12 @@ Page({
 			imageUrl: ''
 		};
 	},
+	async loginHook() {
+		const popupDiscount = this.selectComponent('#popup-discount');
+		if (popupDiscount) {
+			await popupDiscount.getPopupDiscountList();
+		}
+	},
 	async getHomeInfo() {
 		try {
 			const home = await wx.cloud.callFunction({
@@ -61,7 +67,6 @@ Page({
 				banner: lget(home, 'result.data.banner'),
 				showComment: lget(home, 'result.data.showComment'),
 			});
-			console.log(home);
 		} catch (e) {
 			console.log(e);
 		}
