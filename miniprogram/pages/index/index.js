@@ -10,7 +10,8 @@ Page({
 	data: {
 		desk: null,
 		banner: [],
-		showComment: false
+		showComment: false,
+		discountList: [],
 	},
 
 	/**
@@ -30,6 +31,7 @@ Page({
 	 */
 	onShow() {
 		this.getHomeInfo();
+		this.getDiscount();
 	},
 
 	/**
@@ -49,10 +51,11 @@ Page({
 			imageUrl: ''
 		};
 	},
-	async loginHook() {
+	loginHook() {
 		const popupDiscount = this.selectComponent('#popup-discount');
 		if (popupDiscount) {
-			await popupDiscount.getPopupDiscountList();
+			popupDiscount.getPopupDiscountList();
+			this.getDiscount();
 		}
 	},
 	async getHomeInfo() {
@@ -66,6 +69,23 @@ Page({
 			this.setData({
 				banner: lget(home, 'result.data.banner'),
 				showComment: lget(home, 'result.data.showComment'),
+			});
+		} catch (e) {
+			console.log(e);
+		}
+	},
+	async getDiscount() {
+		try {
+			const discount = await wx.cloud.callFunction({
+				name: 'shop',
+				data: {
+					name: 'discount',
+					type: 'normal',
+					params: lget(this.data.userInfo, '_id')
+				},
+			});
+			this.setData({
+				discountList: lget(discount, 'result.data')
 			});
 		} catch (e) {
 			console.log(e);

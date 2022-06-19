@@ -1,4 +1,7 @@
 exports.DiscountType = {
-	info: 0,
-	quan: 1
+	jianInfo: 0,
+	zheInfo: 1,
+	jianQuan: 2,
+	zheQuan: 3,
+	diQuan: 4
 };

@@ -1,5 +1,6 @@
 const tryCatchWrap = require('../utils/tryCatchWrap'),
-	popup = require('./popup');
+	popup = require('./popup'),
+	normal = require('./normal');
 /**
  * @param {object} cloud - wx.cloud
  * @param {object} event - 触发云函数的事件.
@@ -12,6 +13,9 @@ const discount = async (cloud, event) => {
 	switch (type) {
 		case 'popup': {
 			return await popup(cloud, params);
+		}
+		case 'normal': {
+			return await normal(cloud, params);
 		}
 	}
 };

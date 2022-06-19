@@ -9,7 +9,7 @@ const popup = async (cloud, userId) => {
 		discountMapDb = db.collection(discountDbName),
 		query = {
 			popup: true,
-			type: DiscountType.quan,
+			type: _.in([DiscountType.diQuan, DiscountType.jianQuan, DiscountType.zheQuan]),
 			use: true
 		};
 

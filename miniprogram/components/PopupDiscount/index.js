@@ -42,8 +42,10 @@ Component({
 					},
 				});
 				const discountList = lget(discountResult, 'result.data');
+				this.setData({
+					list: discountList
+				});
 				hasShow = true;
-				console.log(discountList);
 			} catch (error) {
 				console.log(error);
 			}
