@@ -54,6 +54,20 @@ Page({
         time,
         expireDate
       });
+      try {
+        const userInfo = await wx.cloud.callFunction({
+          name: "hesuan",
+          data: {
+            type: "user",
+          },
+        });
+        const userDetail = lget(userInfo, "result.data");
+        if (userDetail) {
+          this.setUserInfo(userDetail);
+        }
+      } catch (e) {
+        console.log(e)
+      }
       // await this.getSoulSoup()
     }
   },
