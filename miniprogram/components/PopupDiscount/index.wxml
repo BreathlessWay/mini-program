@@ -1,2 +1,11 @@
-<!--components/PopupDiscount/index.wxml-->
-<text>components/PopupDiscount/index.wxml</text>
+<van-dialog use-title-slot use-slot show="{{ show }}" show-confirm-button="{{ false }}" close-on-click-overlay bind:close="handleCloseModel">
+  <view slot="title" class="popup-discount_head van-hairline--bottom">
+    <text>领取优惠券</text>
+    <view class="popup-discount_head__icon" bind:tap="handleCloseModel">
+      <van-icon name="cross" color="#969799"/>
+    </view>
+  </view>
+  <view>
+  1
+  </view>
+</van-dialog>

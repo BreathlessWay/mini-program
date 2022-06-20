@@ -1,1 +1,11 @@
-/* components/PopupDiscount/index.wxss */
+.popup-discount_head {
+  position: relative;
+  top: -30rpx;
+  padding-bottom: 20rpx;
+}
+
+.popup-discount_head__icon {
+  position: absolute;
+  top: 0;
+  right: 20rpx
+}

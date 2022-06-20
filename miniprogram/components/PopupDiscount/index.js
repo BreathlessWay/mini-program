@@ -1,10 +1,12 @@
 import lget from 'lodash.get';
 
 const app = getApp();
-
 let hasShow = false;
-// components/PopupDiscount/index.js
+
 Component({
+	options: {
+		styleIsolation: 'shared',
+	},
 	/**
 	 * 组件的属性列表
 	 */
@@ -43,12 +45,18 @@ Component({
 				});
 				const discountList = lget(discountResult, 'result.data');
 				this.setData({
+					show: true,
 					list: discountList
 				});
 				hasShow = true;
 			} catch (error) {
 				console.log(error);
 			}
+		},
+		handleCloseModel() {
+			this.setData({
+				show: false,
+			});
 		}
 	}
 });
