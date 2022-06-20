@@ -1,6 +1,29 @@
 <!--components/Banner/index.wxml-->
-<view wx:for="{{ discountList }}" wx:key="_id">
+<!-- <view wx:for="{{ discountList }}" wx:key="_id">
   <text wx:if="{{ item.man }}">满{{ item.man }}</text>
   <text wx:if="{{ item.jian }}">减{{ item.jian }}</text>
-  <text wx:if="{{ item.zhe }}">折{{ item.zhe }}</text>
-</view>
+</view> -->
+<van-cell is-link="{{ activityCount }}" title-width="80%" bind:click="handleClick" value="{{ activityCount ? activityCount+'个活动' : '' }}" arrow-direction="{{ active ? 'up' :'down' }}">
+  <view slot="title" class="discount-left">
+    <van-tag type="warning" custom-class="discount-left_tag">{{ manJianInfoTitle ? '满减' : '券' }}</van-tag>
+    <view class="discount-left_title van-ellipsis">
+      {{ manJianInfoTitle || manJianQuanTitle || diKouQuanTitle }}
+    </view>
+  </view>
+</van-cell>
+<van-popup show="{{ popupShow }}" position="bottom" closeable round custom-style="height: 70vh" bind:close="handlePopupClose">
+  <view class="discount-popup_title">
+    <text>优惠信息</text>
+  </view>
+  <view class="discount-popup">
+    <view class="discount-popup_wrap discount-popup_info">
+      <van-tag type="warning" custom-class="discount-popup_info-tag">{{ manJianInfoTitle ? '满减' : '券' }}</van-tag>
+      <view class="discount-popup_info-detail">
+        {{ manJianInfoTitle }}
+      </view>
+    </view>
+    <view wx:for="{{ quan }}" wx:key="_id" class="discount-popup_wrap">
+      <coupon-item item="{{ item }}" bind:click="handleClickCoupon" />
+    </view>
+  </view>
+</van-popup>

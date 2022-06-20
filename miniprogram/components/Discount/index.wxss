@@ -1,1 +1,46 @@
-/* components/Banner/index.wxss */
+.discount-left {
+  display: flex;
+  align-items: center;
+}
+
+.discount-left_title {
+  margin-left: 10rpx;
+  color: #333;
+  white-space: nowrap;
+  width: 80%;
+}
+
+.discount-left_tag {
+  display: block;
+  white-space: nowrap;
+}
+
+.discount-popup_title {
+  text-align: center;
+  margin: 20rpx;
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333
+}
+
+.discount-popup {
+  padding: 0 40rpx 40rpx;
+}
+
+.discount-popup_info {
+  display: flex;
+}
+
+.discount-popup_wrap {
+  margin-bottom: 20rpx;
+}
+
+.discount-popup_info-detail {
+  margin-left: 10rpx;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.discount-popup_info-tag {
+  white-space: nowrap;
+}

@@ -39,7 +39,9 @@ App({
 		shop_setting: {
 			mode: 1,
 			showComment: true,
-			minPrice: 0
+      minPrice: 0,
+      close: false,
+      deliveryFee: 0
 		}
 	}
 });
