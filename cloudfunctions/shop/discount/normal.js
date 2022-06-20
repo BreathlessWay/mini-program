@@ -18,6 +18,7 @@ const normal = async (cloud, userId) => {
 			$.eq(['$popup', false]),
 			$.eq(['$use', true]),
 			$.or([
+				$.ifNull(['$user', []]),
 				$.in([userId, '$user']),
 				$.eq([$.size('$user'), 0])
 			])
@@ -29,7 +30,6 @@ const normal = async (cloud, userId) => {
 			.field({
 				jian: true,
 				man: true,
-				zhe: true,
 				type: true,
 				expireStart: true,
 				expireEnd: true

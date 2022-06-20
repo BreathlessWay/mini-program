@@ -11,7 +11,7 @@ const popup = async (cloud, userId) => {
 
 	let query = {
 		popup: true,
-		type: _.in([DiscountType.diQuan, DiscountType.jianQuan, DiscountType.zheQuan]),
+		type: _.in([DiscountType.diQuan, DiscountType.jianQuan]),
 		use: true
 	};
 
@@ -19,7 +19,7 @@ const popup = async (cloud, userId) => {
 		query = _.expr($.and([
 			$.eq(['$popup', true]),
 			$.eq(['$use', true]),
-			$.in(['$type', [DiscountType.diQuan, DiscountType.jianQuan, DiscountType.zheQuan]]),
+			$.in(['$type', [DiscountType.diQuan, DiscountType.jianQuan]]),
 			$.or([
 				$.ifNull(['$user', []]),
 				$.in([userId, '$user']),
@@ -33,7 +33,6 @@ const popup = async (cloud, userId) => {
 			.field({
 				jian: true,
 				man: true,
-				zhe: true,
 				type: true,
 				expireStart: true,
 				expireEnd: true

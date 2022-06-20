@@ -15,6 +15,9 @@
 
 // del-color	[可选] del 状态下文字颜色，只在del状态下有效，正常状态下文字颜色可继承父元素
 Component({
+	options: {
+		styleIsolation: 'shared',
+	},
 	/**
 	 * 组件的属性列表
 	 */

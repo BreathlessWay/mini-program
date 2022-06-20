@@ -1,5 +1,8 @@
 // components/Coupon/index.js
 Component({
+	options: {
+		styleIsolation: 'shared',
+	},
 	/**
 	 * 组件的属性列表
 	 */

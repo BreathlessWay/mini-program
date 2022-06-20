@@ -2,6 +2,9 @@ import lget from 'lodash.get';
 import Toast from '@vant/weapp/toast/toast';
 
 Component({
+	options: {
+		styleIsolation: 'shared',
+	},
 	/**
 	 * 组件的属性列表
 	 */
