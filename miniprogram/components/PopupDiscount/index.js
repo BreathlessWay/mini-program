@@ -57,6 +57,9 @@ Component({
 			this.setData({
 				show: false,
 			});
+		},
+		handleClickCoupon(e) {
+			console.log(e.detail);
 		}
 	}
 });

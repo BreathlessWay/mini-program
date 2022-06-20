@@ -9,3 +9,14 @@
   top: 0;
   right: 20rpx
 }
+
+.popup-discount_content {
+  padding: 20rpx 40rpx;
+  min-height: 300rpx;
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+.popup-discount_content__item {
+  margin-bottom: 20rpx;
+}

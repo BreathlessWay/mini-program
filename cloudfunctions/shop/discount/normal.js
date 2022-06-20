@@ -31,10 +31,12 @@ const normal = async (cloud, userId) => {
 				man: true,
 				zhe: true,
 				type: true,
+				expireStart: true,
+				expireEnd: true
 			})
 			.get(),
 		discountList = lget(discountResult, 'data');
-	
+
 	return {
 		errMsg: '',
 		status: successStatus,

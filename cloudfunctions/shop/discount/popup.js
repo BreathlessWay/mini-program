@@ -34,7 +34,9 @@ const popup = async (cloud, userId) => {
 				jian: true,
 				man: true,
 				zhe: true,
-				type: true
+				type: true,
+				expireStart: true,
+				expireEnd: true
 			})
 			.get(),
 		discountList = lget(discountResult, 'data');
