@@ -25,9 +25,30 @@
   </swiper>
   <shop-discount discountList="{{ discountList }}" />
   <van-tabs active="{{ active }}" bind:change="handleTabChange" wx:if="{{ shop_setting.showComment }}">
-    <van-tab title="商品"/>
-    <van-tab title="评价"/>
+    <van-tab title="商品" />
+    <van-tab title="评价" />
   </van-tabs>
+  <view wx:if="{{ categoryLoading }}" class="home-product_loading">
+    <van-loading size="36px" vertical vertical color="#ee0a24">
+      <text style="color: #ee0a24;">
+        加载中...
+      </text>
+    </van-loading>
+  </view>
+  <view class="home-product" wx:else>
+    <scroll-view scroll-y class="home-product_category">
+      <van-sidebar active-key="{{ activeCategoryIndex }}">
+        <van-sidebar-item wx:for="{{ category }}" title="{{ item.name }}" wx:key="_id" />
+      </van-sidebar>
+    </scroll-view>
+    <scroll-view scroll-y class="home-product_list">
+      <van-card lazy-load price="2.00" origin-price="10.00" tag="热销" desc="描述信息" title="商品标题" thumb="https://img01.yzcdn.cn/vant/ipad.jpeg">
+        <view slot="num" style="float: right;" wx:if="{{ !shop_setting.close }}">
+          <van-icon name="cart-o" />
+        </view>
+      </van-card>
+    </scroll-view>
+  </view>
 </view>
 <shop-initial wx:else shop-initial-fail="{{ shop_initial_fail }}" />
 <shop-register wx:if="{{ register }}" bind:register="handleRegister" bind:close="handleCloseRegister" />

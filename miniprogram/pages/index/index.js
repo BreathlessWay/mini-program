@@ -1,4 +1,5 @@
 import lget from 'lodash.get';
+import Toast from '@vant/weapp/toast/toast';
 
 import login from '../../behaviors/login';
 
@@ -12,6 +13,11 @@ Page({
 		banner: [],
 		discountList: [],
 		active: 0,
+		category: [],
+		activeCategoryIndex: 0,
+		product: [],
+		categoryLoading: true,
+		productLoading: true
 	},
 
 	/**
@@ -32,6 +38,7 @@ Page({
 	onShow() {
 		this.getHomeInfo();
 		this.getDiscount();
+		this.getCategory();
 	},
 
 	/**
@@ -39,7 +46,7 @@ Page({
 	 */
 	async onPullDownRefresh() {
 		try {
-			await Promise.all([this.getHomeInfo(), this.getDiscount()]);
+			await Promise.all([this.getHomeInfo(), this.getDiscount(), this.getCategory()]);
 		} finally {
 			wx.stopPullDownRefresh();
 		}
@@ -60,6 +67,7 @@ Page({
 		if (popupDiscount) {
 			popupDiscount.getPopupDiscountList();
 			this.getDiscount();
+			this.getCategory();
 		}
 	},
 	async getHomeInfo() {
@@ -98,5 +106,61 @@ Page({
 		this.setData({
 			active: e.detail.index
 		});
+	},
+	async getCategory() {
+		this.setData({
+			categoryLoading: true
+		});
+		try {
+			const category = await wx.cloud.callFunction({
+				name: 'shop',
+				data: {
+					name: 'product',
+					type: 'category'
+				},
+			});
+			const list = lget(category, 'result.data') || [];
+			this.setData({
+				category: list
+			});
+			if (list.length) {
+				await this.getProduct(lget(list, '0._id'));
+			}
+		} catch (e) {
+			console.log(e);
+			Toast.fail('获取商品分类信息失败');
+		} finally {
+			this.setData({
+				categoryLoading: false
+			});
+		}
+	},
+	async getProduct(categoryId) {
+		this.setData({
+			productLoading: true
+		});
+		try {
+			const product = await wx.cloud.callFunction({
+				name: 'shop',
+				data: {
+					name: 'product',
+					type: 'list',
+					params: {
+						categoryId
+					}
+				},
+			});
+			const list = lget(product, 'result.data') || [];
+			this.setData({
+				product: list
+			});
+		} catch (e) {
+			console.log(e);
+			Toast.fail('获取商品列表失败');
+		} finally {
+			this.setData({
+				productLoading: false
+			});
+		}
 	}
 });

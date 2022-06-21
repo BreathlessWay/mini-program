@@ -44,11 +44,13 @@ Component({
 					},
 				});
 				const discountList = lget(discountResult, 'result.data');
-				this.setData({
-					show: true,
-					list: discountList
-				});
-				hasShow = true;
+				if (discountList && discountList.length) {
+					this.setData({
+						show: true,
+						list: discountList
+					});
+					hasShow = true;
+				}
 			} catch (error) {
 				console.log(error);
 			}

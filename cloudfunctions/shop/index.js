@@ -6,6 +6,7 @@ const cloud = require('wx-server-sdk'),
 	setting = require('./setting/index'),
 	home = require('./home/index'),
 	discount = require('./discount/index'),
+	product = require('./product/index'),
 	{ env } = require('./constants');
 
 cloud.init({
@@ -32,6 +33,8 @@ exports.main = async (event, context) => {
 				return await home(cloud, rest, context);
 			case 'discount':
 				return await discount(cloud, rest, context);
+			case 'product':
+				return await product(cloud, rest, context);
 		}
 	} catch (error) {
 		throw error.errMsg || error.message;

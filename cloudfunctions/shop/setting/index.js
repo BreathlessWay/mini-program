@@ -2,9 +2,8 @@ const lget = require('lodash').get,
 	tryCatchWrap = require('../utils/tryCatchWrap'),
 	{ settingDbName, successStatus } = require('../constants');
 
-const setting = async (cloud, event) => {
-	const { params } = event,
-		db = cloud.database(),
+const setting = async (cloud) => {
+	const db = cloud.database(),
 		settingMapDb = db.collection(settingDbName),
 		settingResult = await settingMapDb.get(),
 		setting = lget(settingResult, 'data.0');

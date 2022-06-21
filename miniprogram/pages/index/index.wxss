@@ -44,4 +44,25 @@
   width: 100%;
 }
 
+.home-product {
+  display: flex;
+  height: calc(100vh - 44px);
+  padding-bottom: 100rpx;
+}
+
+.home-product_loading {
+  width: 100%;
+  text-align: center;
+  padding-top: 200rpx;
+}
+
+.home-product_category {
+  width: 160rpx;
+}
+
+.home-product_list {
+  flex: 1;
+  padding-top: 20rpx;
+}
+
 @import 'index-wxa-auto-dark.wxss'

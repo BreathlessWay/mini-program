@@ -1,6 +1,8 @@
 {
   "usingComponents": {
-    "shop-discount": "../../components/Discount/index"
+    "shop-discount": "../../components/Discount/index",
+    "van-sidebar": "@vant/weapp/sidebar/index",
+    "van-sidebar-item": "@vant/weapp/sidebar-item/index"
   },
   "enablePullDownRefresh": true
 }

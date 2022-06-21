@@ -1,4 +1,5 @@
 import lget from 'lodash.get';
+import Toast from '@vant/weapp/toast/toast';
 
 const _page = Page;
 
@@ -30,6 +31,9 @@ Page = function (options) {
 				this.setData({
 					shop_setting: rest
 				});
+				if (!rest.close) {
+					Toast('店铺打烊了!');
+				}
 				getApp().globalData.shop_setting = rest;
 			} else {
 				throw new Error('尚未设置店铺模式');
